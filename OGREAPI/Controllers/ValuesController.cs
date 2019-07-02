@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,16 +12,16 @@ namespace OGREAPI.Controllers
     public class ValuesController : ControllerBase
     {
         // GET api/Bank
-        [HttpGet]
+        [HttpGet("{rank}")]
        // public ActionResult<IEnumerable<string>> Get()
-        public ActionResult<string> Get()
+        public ActionResult<string> Get(int rank)
         {
-            return BankDatabase.Instance.ToString();
+            return BankDatabase.Instance.GetBankAsJSON(rank);
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpGet("{rank}/{id}")]
+        public ActionResult<string> Get(int rank, int id)
         {
             Item item = BankDatabase.Instance.GetItemWithID(id);
             if( item == null )

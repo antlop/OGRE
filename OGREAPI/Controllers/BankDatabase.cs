@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -69,15 +69,15 @@ namespace OGREAPI.Controllers
             }
             return null;
         }
-
-        public override string ToString()
-        {
+      
+        public string GetBankAsJSON(int rank) {
+          
             string str = "{ \"Bank\": {\"Version\": \"" + GetBankVersionNumber() + "\",\"Tabs\": [";
 
             int count = 0;
             foreach (Grouping tab in BankTabs)
             {
-                if (tab.ItemsDictionary != null)
+                if (tab.ItemsDictionary != null && tab.ViewPermission < rank)
                 {
                     str += tab.ToString();
                     if (count + 1 < BankTabs.Count)
