@@ -77,7 +77,7 @@ namespace OGREAPI.Controllers
             int count = 0;
             foreach (Grouping tab in BankTabs)
             {
-                if (tab.ItemsDictionary != null && tab.ViewPermission < rank)
+                if (tab.ItemsDictionary != null && Convert.ToInt32(tab.ViewPermission) < rank)
                 {
                     str += tab.ToString();
                     if (count + 1 < BankTabs.Count)
