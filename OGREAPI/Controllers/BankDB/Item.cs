@@ -12,6 +12,13 @@ namespace OGREAPI.Controllers
         public string Name;
         public int StackSize = 1;
 
+        public Item(Item item, int stackSize)
+        {
+            ItemID = item.ItemID;
+            Name = item.Name;
+            StackSize = stackSize;
+        }
+
         public Item(int id, string name)
         {
             ItemID = id;

@@ -6,6 +6,9 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
+    <Folder Include="Controllers\EventsDB\" />
+    <Folder Include="Controllers\UsersDB\" />
+    <Folder Include="Controllers\BankDB\" />
   </ItemGroup>
 
   <ItemGroup>

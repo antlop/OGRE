@@ -9,7 +9,7 @@ namespace OGREAPI.Controllers
 {
     [Route("api/Bank")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class BankController : ControllerBase
     {
         // GET api/Bank
         [HttpGet("{rank}")]
