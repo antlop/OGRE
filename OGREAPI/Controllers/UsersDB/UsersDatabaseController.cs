@@ -13,7 +13,7 @@ namespace OGREAPI.Controllers
     {
         // GET api/User
         [HttpGet("{username}/{password}/{version}")]
-        public ActionResult<string> Get(string username, string password, int version)
+        public string Get(string username, string password, int version)
         {
             if( !UserDatabase.Instance.UsersDB.ContainsKey(username) )
             {

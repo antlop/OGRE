@@ -16,37 +16,20 @@ namespace OGRE
 {
     public partial class MainPage : Form
     {
-        string Username;
-        string Password;
-        public HttpClient client;
+        public User user;
 
         public MainPage()
         {
             InitializeComponent();
-            client = new HttpClient();
+            user = User.Instance;
+
+            LoginPage page = new LoginPage();
+            page.Show(this);
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            string username = UsernameTextBox.Text;
-            string password = PasswordTextBox.Text;
-
-            Login(username, password);
         }
-        
-        async Task<string> Login(string username, string password)
-        {
-            string path = "https://localhost:44320//api";
-            path += "//User//" + username + "//" + password + "//1";
-            string retsz = "";
 
-            HttpResponseMessage response = await client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                retsz = await response.Content.ReadAsAsync<string>();
-                ResponseBox.Text = response.Content.ToString();
-            }
-            return retsz;
-        }
     }
 }
