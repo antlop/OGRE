@@ -19,5 +19,10 @@ namespace OGREAPI.Controllers
             BankVersion = bankversion;
             Rank = MemberRanks.MEMBER;
         }
+
+        public override string ToString()
+        {
+            return Name + ";" + Password + ";" + BankVersion.ToString() + ";" + Rank.ToString();
+        }
     }
 }

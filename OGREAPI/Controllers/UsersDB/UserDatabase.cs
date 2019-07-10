@@ -19,5 +19,18 @@ namespace OGREAPI.Controllers
         }
 
         public Dictionary<string, User> UsersDB;
+
+        public bool DatabaseContainsKey(string key)
+        {
+            bool containsKey = false;
+            lock(UsersDB)
+            {
+                if( UsersDB.ContainsKey(key) )
+                {
+                    containsKey = true;
+                }
+            }
+            return containsKey;
+        }
     }
 }

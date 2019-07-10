@@ -10,14 +10,20 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.IO;
+using System.Security.AccessControl;
+using OGREAPI.Controllers;
 
 namespace OGREAPI
 {
     public class Startup
     {
+        int count = 0;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            LoadUpDatabases();
+            SaveDatabases();
         }
 
         public IConfiguration Configuration { get; }
@@ -43,6 +49,72 @@ namespace OGREAPI
 
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        void LoadUpDatabases()
+        {
+
+        }
+
+        void SaveDatabases()
+        {
+            WriteDatabasesToFile();
+            var t = Task.Run(async delegate
+            {
+                await Task.Delay(300000);
+                return 42;
+            });
+            t.Wait();
+
+
+            SaveDatabases();
+        }
+
+        void WriteDatabasesToFile()
+        {
+                string path = "C:";
+            AddDirectorySecurity(path);
+            path += "\\OGRE\\API";
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+                AddDirectorySecurity(path);
+            }
+
+            path += "\\Users.txt";
+            if( !File.Exists(path))
+            {
+                File.Create(path);
+                AddDirectorySecurity(path);
+            }
+
+            using (StreamWriter writer = new StreamWriter(path))
+            {
+                lock (UserDatabase.Instance.UsersDB)
+                {
+                    foreach (User user in UserDatabase.Instance.UsersDB.Values)
+                    {
+                        writer.WriteLine(user.ToString() + "\n");
+                    }
+                }
+            }
+        }
+
+        public static void AddDirectorySecurity(string FileName)
+        {
+            // Create a new DirectoryInfo object.
+            DirectoryInfo dInfo = new DirectoryInfo(FileName);
+
+            // Get a DirectorySecurity object that represents the 
+            // current security settings.
+            DirectorySecurity dSecurity = dInfo.GetAccessControl();
+
+            // Add the FileSystemAccessRule to the security settings. 
+            dSecurity.AddAccessRule(new FileSystemAccessRule(Environment.UserDomainName + "\\" + Environment.UserName, FileSystemRights.FullControl, AccessControlType.Allow));
+
+            // Set the new access settings.
+            dInfo.SetAccessControl(dSecurity);
         }
     }
 }

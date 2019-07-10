@@ -15,21 +15,25 @@ namespace OGREAPI.Controllers
         [HttpGet("{username}/{password}/{version}")]
         public string Get(string username, string password, int version)
         {
-            if( !UserDatabase.Instance.UsersDB.ContainsKey(username) )
+            if( !UserDatabase.Instance.DatabaseContainsKey(username) )
             {
                 return "Username";
             }
-            if( UserDatabase.Instance.UsersDB[username].Password.Equals(password) )
+
+            string returnsz = "Password";
+            lock (UserDatabase.Instance.UsersDB)
             {
-                string ret = "Success;" + UserDatabase.Instance.UsersDB[username].Rank.ToString();
-                if( UserDatabase.Instance.UsersDB[username].BankVersion != BankDatabase.Instance.GetBankVersionNumber())
+                if (UserDatabase.Instance.UsersDB[username].Password.Equals(password))
                 {
-                    ret += ";Reload";
+                   returnsz = "Success;" + UserDatabase.Instance.UsersDB[username].Rank.ToString();
+                    if (UserDatabase.Instance.UsersDB[username].BankVersion != BankDatabase.Instance.GetBankVersionNumber())
+                    {
+                        returnsz += ";Reload";
+                    }
                 }
-                return ret;
             }
 
-            return "Password";
+            return returnsz;
         }
 
         // POST api/User
@@ -38,12 +42,15 @@ namespace OGREAPI.Controllers
         {
             //Item item = new Item(Convert.ToInt32(value["ID"]), value["Name"]);
             User user = new User(username, password, BankDatabase.Instance.GetBankVersionNumber());
-            if( UserDatabase.Instance.UsersDB.ContainsKey(user.Name) )
+            if( UserDatabase.Instance.DatabaseContainsKey(user.Name) )
             {
                 return "Username";
             }
 
-            UserDatabase.Instance.UsersDB.Add(user.Name, user);
+            lock (UserDatabase.Instance.UsersDB)
+            {
+                UserDatabase.Instance.UsersDB.Add(user.Name, user);
+            }
             return "Success";
         }
 
@@ -54,12 +61,15 @@ namespace OGREAPI.Controllers
             //Item item = new Item(Convert.ToInt32(value["ID"]), value["Name"]);
             User user = new User(username, password, BankDatabase.Instance.GetBankVersionNumber());
             user.Rank = (MemberRanks)rank;
-            if (UserDatabase.Instance.UsersDB.ContainsKey(user.Name))
+            if (UserDatabase.Instance.DatabaseContainsKey(user.Name))
             {
                 return "Username";
             }
 
-            UserDatabase.Instance.UsersDB.Add(user.Name, user);
+            lock (UserDatabase.Instance.UsersDB)
+            {
+                UserDatabase.Instance.UsersDB.Add(user.Name, user);
+            }
             return "Success";
         }
     }
