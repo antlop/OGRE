@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using System.IO;
 using System.Security.AccessControl;
 using OGREAPI.Controllers;
+using System.Timers.Timer;
 
 namespace OGREAPI
 {
@@ -23,7 +24,14 @@ namespace OGREAPI
         {
             Configuration = configuration;
             LoadUpDatabases();
-            SaveDatabases();
+
+		Timer t = new Timer(60000); // 1 sec = 1000, 60 sec = 60000
+
+		t.AutoReset = true;
+
+		t.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);
+
+		t.Start();
         }
 
         public IConfiguration Configuration { get; }
@@ -53,22 +61,39 @@ namespace OGREAPI
 
         void LoadUpDatabases()
         {
-
+		string path = "C:\\OGRE\\API";
+		if( Directory.Exists(path) && File.Exists(path + "\\Users.txt") ) {
+		using( StreamReader reader = new StreamReader(path + "\\Users.txt") ) {
+			lock(UserDatabase.Instance.UsersDB) 
+			{
+				while(!reader.EndOfStream) {
+					string[] line = reader.ReadLine().Split(';');
+					User user = new User();
+					user.Name = line[0];
+					user.Password = line[1];
+					user.Version = Convert.ToInt32(line[2]);
+					switch(line[3]) {
+						case "Member":
+							user.Rank = .Member;
+						break;
+						case "GuildLeader":
+							user.Rank = .GuildLeader;
+						break;
+						case "GuildMaster":
+							user.Rank = .GuildMaster;
+						break;
+					}
+					UserDatabase.Instance.UsersDB.Add(line[0], user);
+				}
+			}
+		}
         }
 
-        void SaveDatabases()
-        {
+	private static void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+
+	{
             WriteDatabasesToFile();
-            var t = Task.Run(async delegate
-            {
-                await Task.Delay(300000);
-                return 42;
-            });
-            t.Wait();
-
-
-            SaveDatabases();
-        }
+	}
 
         void WriteDatabasesToFile()
         {
