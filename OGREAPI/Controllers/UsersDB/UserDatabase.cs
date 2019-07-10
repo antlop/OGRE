@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +14,8 @@ namespace OGREAPI.Controllers
         {
             UsersDB = new Dictionary<string, User>();
 
-            User user = new User("Anton", "Lopez", 0);
+		Random rand = new Random();
+            User user = new User("Anton+" + rand.Next(1,99999).ToString(), "Lopez", 0);
             UsersDB.Add("Anton", user);
         }
 
