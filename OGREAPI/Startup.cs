@@ -13,7 +13,8 @@ using Microsoft.Extensions.Options;
 using System.IO;
 using System.Security.AccessControl;
 using OGREAPI.Controllers;
-using System.Timers.Timer;
+using System.Timers;
+using Newtonsoft.Json;
 
 namespace OGREAPI
 {
@@ -24,14 +25,15 @@ namespace OGREAPI
         {
             Configuration = configuration;
             LoadUpDatabases();
+            WriteDatabasesToFile();
 
-		Timer t = new Timer(60000); // 1 sec = 1000, 60 sec = 60000
+		    Timer t = new Timer(60000); // 1 sec = 1000, 60 sec = 60000
 
-		t.AutoReset = true;
+		    t.AutoReset = true;
 
-		t.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);
+		    t.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);
 
-		t.Start();
+		    t.Start();
         }
 
         public IConfiguration Configuration { get; }
@@ -61,43 +63,65 @@ namespace OGREAPI
 
         void LoadUpDatabases()
         {
-		string path = "C:\\OGRE\\API";
-		if( Directory.Exists(path) && File.Exists(path + "\\Users.txt") ) {
-		using( StreamReader reader = new StreamReader(path + "\\Users.txt") ) {
-			lock(UserDatabase.Instance.UsersDB) 
-			{
-				while(!reader.EndOfStream) {
-					string[] line = reader.ReadLine().Split(';');
-					User user = new User();
-					user.Name = line[0];
-					user.Password = line[1];
-					user.Version = Convert.ToInt32(line[2]);
-					switch(line[3]) {
-						case "Member":
-							user.Rank = .Member;
-						break;
-						case "GuildLeader":
-							user.Rank = .GuildLeader;
-						break;
-						case "GuildMaster":
-							user.Rank = .GuildMaster;
-						break;
-					}
-					UserDatabase.Instance.UsersDB.Add(line[0], user);
-				}
-			}
-		}
+		    string path = "C:\\OGRE\\API";
+            /*************************************************************************/
+            // USERS
+		    if( Directory.Exists(path) && File.Exists(path + "\\Users.txt") ) {
+                using (StreamReader reader = new StreamReader(path + "\\Users.txt")) {
+                    lock (UserDatabase.Instance.UsersDB)
+                    {
+                        while (!reader.EndOfStream) {
+                            string[] line = reader.ReadLine().Split(';');
+                            if( line.Length < 3 )
+                            {
+                                break;
+                            }
+                            User user = new User(line[0], line[1], Convert.ToInt32(line[2]));
+                            switch (line[3]) {
+                                case "Member":
+                                    user.Rank = MemberRanks.MEMBER;
+                                    break;
+                                case "GuildLeader":
+                                    user.Rank = MemberRanks.GUILD_LEADER;
+                                    break;
+                                case "GuildMaster":
+                                    user.Rank = MemberRanks.GUILD_MASTER;
+                                    break;
+                            }
+                            UserDatabase.Instance.UsersDB.Add(line[0], user);
+                        }
+                    }
+                }
+		    }
+
+            /*************************************************************************/
+            // BANK
+            if (Directory.Exists(path) && File.Exists(path + "\\Bank.txt"))
+            {
+                using (StreamReader reader = new StreamReader(path + "\\Bank.txt"))
+                {
+                    lock (BankDatabase.Instance)
+                    {
+                        string json = reader.ReadLine();
+                        var bank = JsonConvert.DeserializeObject<Bank>(json);
+
+                        BankDatabase.Instance.m_Bank = bank;
+
+                        int breakpoint = 0;
+                        breakpoint++;
+                    }
+                }
+            }
         }
 
-	private static void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-
-	{
+        void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+	    {
             WriteDatabasesToFile();
-	}
+	    }
 
         void WriteDatabasesToFile()
         {
-                string path = "C:";
+            string path = "C:";
             AddDirectorySecurity(path);
             path += "\\OGRE\\API";
 
@@ -107,23 +131,46 @@ namespace OGREAPI
                 AddDirectorySecurity(path);
             }
 
-            path += "\\Users.txt";
-            if( !File.Exists(path))
+            /********************************************************************/
+            // USERS
+            string usersPath = path + "\\Users.txt";
+            if( !File.Exists(usersPath))
             {
-                File.Create(path);
-                AddDirectorySecurity(path);
+                File.Create(usersPath);
+                AddDirectorySecurity(usersPath);
             }
 
-            using (StreamWriter writer = new StreamWriter(path))
+            using (StreamWriter writer = new StreamWriter(usersPath))
             {
                 lock (UserDatabase.Instance.UsersDB)
                 {
                     foreach (User user in UserDatabase.Instance.UsersDB.Values)
                     {
-                        writer.WriteLine(user.ToString() + "\n");
+                        writer.WriteLine(user.ToString());
                     }
                 }
             }
+            /********************************************************************/
+
+
+            /********************************************************************/
+            // Bank
+            string bankPath = path + "\\Bank.txt";
+            if (!File.Exists(bankPath))
+            {
+                File.Create(bankPath);
+                AddDirectorySecurity(bankPath);
+            }
+
+            using (StreamWriter writer = new StreamWriter(bankPath))
+            {
+                lock (BankDatabase.Instance)
+                {
+                    string sz = JsonConvert.SerializeObject(BankDatabase.Instance.m_Bank);
+                    writer.WriteLine(sz);
+                }
+            }
+            /********************************************************************/
         }
 
         public static void AddDirectorySecurity(string FileName)
