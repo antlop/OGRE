@@ -39,6 +39,20 @@ namespace OGREAPI.Controllers
             BankDatabase.Instance.AddItemToBankTab(item, Convert.ToInt32(value["Tab"]));
         }
 
+        // POST api/values
+        [HttpPost("AddTab/{tabName}")]
+        public void Post(string tabName)
+        {
+            BankDatabase.Instance.CreateAdditionalTab(tabName);
+        }
+
+        // POST api/values
+        [HttpPost("SetTabNam/{tabIndex}/{tabName}")]
+        public void Post(int tabIndex, string tabName)
+        {
+            BankDatabase.Instance.SetTabName(tabIndex, tabName);
+        }
+
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)

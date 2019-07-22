@@ -51,7 +51,19 @@ namespace OGREAPI.Controllers
             {
                 Grouping grouping = new Grouping();
                 m_Bank.BankTabs.Add(grouping);
-            } 
+            }
+        }
+
+        public void CreateAdditionalTab(string name) {
+            Grouping grouping = new Grouping();
+            grouping.Name = name;
+            m_Bank.BankTabs.Add(grouping);
+        }
+
+        public void SetTabName(int index, string name) {
+            if( m_Bank.BankTabs.Count < index) {
+                m_Bank.BankTabs[index].Name = name;
+            }
         }
 
         public void RemoveItem(int itemID, int tabIndex, int count)
@@ -73,9 +85,9 @@ namespace OGREAPI.Controllers
             }
             return null;
         }
-      
+
         public string GetBankAsJSON(int rank) {
-          
+
             string str = "{ \"Bank\": {\"Version\": \"" + GetBankVersionNumber() + "\",\"Tabs\": [";
 
             int count = 0;

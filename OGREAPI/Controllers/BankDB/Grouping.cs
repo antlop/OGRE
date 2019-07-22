@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +18,7 @@ namespace OGREAPI.Controllers
         public MemberRanks ViewPermission = MemberRanks.MEMBER;
         public MemberRanks AddPermission = MemberRanks.GUILD_LEADER;
         public MemberRanks RemovePermission = MemberRanks.GUILD_MASTER;
+        public string Name = "Tab";
 
         public void AddItem(Item item)
         {
