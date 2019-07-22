@@ -106,9 +106,22 @@ namespace OGREAPI
                         var bank = JsonConvert.DeserializeObject<Bank>(json);
 
                         BankDatabase.Instance.m_Bank = bank;
+                    }
+                }
+            }
 
-                        int breakpoint = 0;
-                        breakpoint++;
+            /*************************************************************************/
+            // EVENT
+            if (Directory.Exists(path) && File.Exists(path + "\\Event.txt"))
+            {
+                using (StreamReader reader = new StreamReader(path + "\\Event.txt"))
+                {
+                    lock (EventDatabase.Instance.m_Event)
+                    {
+                        string json = reader.ReadLine();
+                        var event = JsonConvert.DeserializeObject<Event>(json);
+
+                        EventDatabase.Instance.m_Event = event;
                     }
                 }
             }
@@ -171,6 +184,26 @@ namespace OGREAPI
                 }
             }
             /********************************************************************/
+
+
+            /********************************************************************/
+            // Event
+            string eventPath = path + "\\Event.txt";
+            if (!File.Exists(eventPath))
+            {
+                File.Create(eventPath);
+                AddDirectorySecurity(eventPath);
+            }
+
+            using (StreamWriter writer = new StreamWriter(eventPath))
+            {
+                lock (EventDatabase.Instance.m_Event)
+                {
+                    string sz = JsonConvert.SerializeObject(EventDatabase.Instance.m_Event);
+                    writer.WriteLine(sz);
+                }
+            }
+            /********************************************************************/
         }
 
         public static void AddDirectorySecurity(string FileName)
@@ -178,11 +211,11 @@ namespace OGREAPI
             // Create a new DirectoryInfo object.
             DirectoryInfo dInfo = new DirectoryInfo(FileName);
 
-            // Get a DirectorySecurity object that represents the 
+            // Get a DirectorySecurity object that represents the
             // current security settings.
             DirectorySecurity dSecurity = dInfo.GetAccessControl();
 
-            // Add the FileSystemAccessRule to the security settings. 
+            // Add the FileSystemAccessRule to the security settings.
             dSecurity.AddAccessRule(new FileSystemAccessRule(Environment.UserDomainName + "\\" + Environment.UserName, FileSystemRights.FullControl, AccessControlType.Allow));
 
             // Set the new access settings.

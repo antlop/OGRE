@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,34 +9,29 @@ namespace OGREAPI.Controllers
     {
         private static readonly Lazy<EventDatabase> lazy = new Lazy<EventDatabase>(() => new EventDatabase());
         public static EventDatabase Instance { get { return lazy.Value; } }
-        
+
         private EventDatabase()
         {
-            Submissions = new Dictionary<string, int>();
-
-            Submissions.Add("Anton", 1);
-
-            WinnableItems = new Dictionary<string, Item>();
+            m_Event = new Event();
         }
 
-        public Dictionary<string, int> Submissions;
-        public Dictionary<string, Item> WinnableItems;
+        public Event m_Event;
 
         public void AddSubmission(string name)
         {
-            if( Submissions.ContainsKey(name))
+            if( m_Event.Submissions.ContainsKey(name))
             {
-                Submissions[name] += 1;
+                m_Event.Submissions[name] += 1;
             }
             else
             {
-                Submissions.Add(name, 1);
+                m_Event.Submissions.Add(name, 1);
             }
         }
 
         public void AddItem(Item item)
         {
-            WinnableItems.Add(item.Name, item);
+            m_Event.WinnableItems.Add(item.Name, item);
         }
 
         public void ResetEvent()
@@ -47,12 +42,12 @@ namespace OGREAPI.Controllers
 
         public void ResetSubmission()
         {
-            Submissions.Clear();
+            m_Event.Submissions.Clear();
         }
 
         public void ResetItems()
         {
-            WinnableItems.Clear();
+            m_Event.WinnableItems.Clear();
         }
     }
-} 
+}
