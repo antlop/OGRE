@@ -34,6 +34,8 @@ namespace OGREAPI
 		    t.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);
 
 		    t.Start();
+
+            AllocConsole();
         }
 
         public IConfiguration Configuration { get; }
