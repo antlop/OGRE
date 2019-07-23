@@ -105,7 +105,7 @@ namespace OGREAPI
                         string json = reader.ReadLine();
                         var bank = JsonConvert.DeserializeObject<Bank>(json);
 
-                        BankDatabase.Instance.m_Bank = bank;
+                        //BankDatabase.Instance.m_Bank = bank;
                     }
                 }
             }
@@ -119,9 +119,12 @@ namespace OGREAPI
                     lock (EventDatabase.Instance.m_Event)
                     {
                         string json = reader.ReadLine();
-                        var event = JsonConvert.DeserializeObject<Event>(json);
+                        if (json != null && json.Length > 0)
+                        {
+                            var e = JsonConvert.DeserializeObject<Event>(json);
 
-                        EventDatabase.Instance.m_Event = event;
+                            EventDatabase.Instance.m_Event = e;
+                        }
                     }
                 }
             }

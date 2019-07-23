@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace OGREAPI.Controllers
 {
@@ -16,6 +17,7 @@ namespace OGREAPI.Controllers
        // public ActionResult<IEnumerable<string>> Get()
         public ActionResult<string> Get(int rank)
         {
+            //return JsonConvert.SerializeObject(BankDatabase.Instance.m_Bank);
             return BankDatabase.Instance.GetBankAsJSON(rank);
         }
 
