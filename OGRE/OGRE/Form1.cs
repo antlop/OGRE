@@ -35,7 +35,7 @@ namespace OGRE
 
             EventSystem.Instance.RegisterListenerForEvent("LoginEvent", this);
 
-            m_Explorer = new WowExplorer(WowDotNetAPI.Region.US, Locale.en_US, "732aa68878154a04964e12aed8fddfad");
+            //m_Explorer = new WowExplorer(WowDotNetAPI.Region.US, Locale.en_US, "732aa68878154a04964e12aed8fddfad");
 
         }
 
@@ -70,7 +70,7 @@ namespace OGRE
 
         public void HandleEvent<T>(string eventName, T obj)
         {
-            if( eventName == "LoginEvent" )
+            if (eventName == "LoginEvent")
             {
                 MainTabControl.Visible = true;
                 LoadDataForBankList();
@@ -95,7 +95,6 @@ namespace OGRE
                 int row = 0;
                 foreach (OGREAPI.Controllers.Item item in m_Bank.BankTabs[tabIndex].ItemsDictionary.Values)
                 {
-                    WowDotNetAPI.Models.Item truitem = m_Explorer.GetItem(00000002);
                     RowStyle style = new RowStyle(SizeType.Absolute);
                     style.Height = 80;
                     tableLayoutPanel2.RowStyles.Add(style);
@@ -112,6 +111,55 @@ namespace OGRE
                     }
                 }
             }
+        }
+
+        private void EventTab_Paint(object sender, PaintEventArgs e)
+        {
+            LoadDataForEvent();
+        }
+
+        async public void LoadDataForEvent()
+        {
+            HttpClient client = new HttpClient();
+            string path = "https://localhost:44320//api";
+            path += "//Event";
+            string retsz = "";
+            try
+            {
+                retsz = await client.GetStringAsync(path);
+            }
+            catch
+            {
+                MessageBox.Show("There was an issue, Try again later.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var bank = JsonConvert.DeserializeObject<Bank>(retsz);
+            /*m_Bank = bank;
+
+
+            EventWinnableItemsList.Controls.Clear();
+
+            foreach (OGREAPI.Controllers.Item item in m_Bank.BankTabs[tabIndex].ItemsDictionary.Values)
+            {
+                WowDotNetAPI.Models.Item truitem = m_Explorer.GetItem(00000002);
+                RowStyle style = new RowStyle(SizeType.Absolute);
+                style.Height = 80;
+                tableLayoutPanel2.RowStyles.Add(style);
+
+                Label label = new Label();
+                label.Text = item.Name;
+                tableLayoutPanel2.Controls.Add(label, col, row);
+
+                col++;
+                if (col == tableLayoutPanel2.ColumnCount)
+                {
+                    col = 0;
+                    row++;
+                }
+            }
+            
+            */
         }
     }
 }

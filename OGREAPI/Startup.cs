@@ -35,7 +35,6 @@ namespace OGREAPI
 
 		    t.Start();
 
-            AllocConsole();
         }
 
         public IConfiguration Configuration { get; }

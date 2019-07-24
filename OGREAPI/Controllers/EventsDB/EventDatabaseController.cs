@@ -52,5 +52,27 @@ namespace OGREAPI.Controllers
             }
             return "Failure: Item not found in bank.";
         }
+
+        [HttpGet()]
+        public ActionResult<string> Get()
+        {
+            string json = EventDatabase.Instance.GetJSONWinnableItems();
+            if (json != null && json.Length > 0)
+            {
+                return json;
+            }
+            return "Failure: JSON error";
+        }
+
+        [HttpGet("Entries")]
+        public ActionResult<string> GetEntries()
+        {
+            string json = EventDatabase.Instance.GetJSONEntrys();
+            if (json != null && json.Length > 0)
+            {
+                return json;
+            }
+            return "Failure: JSON error";
+        }
     }
 }
