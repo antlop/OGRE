@@ -15,16 +15,14 @@ using OGRE.Events;
 using OGREAPI.Controllers;
 using Newtonsoft.Json;
 
-using WowDotNetAPI;
-using WowDotNetAPI.Models;
-
 namespace OGRE
 {
     public partial class MainPage : Form, IListener
     {
         public User user;
         public Bank m_Bank;
-        WowExplorer m_Explorer;
+        public Event m_Event;
+
         public MainPage()
         {
             InitializeComponent();
@@ -76,8 +74,7 @@ namespace OGRE
                 LoadDataForBankList();
             }
         }
-
-
+        
         private void TableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
             Console.WriteLine("paint");
@@ -113,9 +110,10 @@ namespace OGRE
             }
         }
 
-        private void EventTab_Paint(object sender, PaintEventArgs e)
+        private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadDataForEvent();
+            LoadUserForEvent();
         }
 
         async public void LoadDataForEvent()
@@ -134,32 +132,96 @@ namespace OGRE
                 return;
             }
 
-            var bank = JsonConvert.DeserializeObject<Bank>(retsz);
-            /*m_Bank = bank;
-
-
-            EventWinnableItemsList.Controls.Clear();
-
-            foreach (OGREAPI.Controllers.Item item in m_Bank.BankTabs[tabIndex].ItemsDictionary.Values)
+            var EventItems = JsonConvert.DeserializeObject<Dictionary<string, Item>>(retsz);
+            if (m_Event == null)
             {
-                WowDotNetAPI.Models.Item truitem = m_Explorer.GetItem(00000002);
+                m_Event = new Event();
+            }
+            m_Event.WinnableItems = EventItems;
+
+
+            EventItemsList.Controls.Clear();
+
+            int row = 0;
+            foreach (Item item in m_Event.WinnableItems.Values)
+            {
                 RowStyle style = new RowStyle(SizeType.Absolute);
                 style.Height = 80;
-                tableLayoutPanel2.RowStyles.Add(style);
+                EventItemsList.RowStyles.Add(style);
 
                 Label label = new Label();
                 label.Text = item.Name;
-                tableLayoutPanel2.Controls.Add(label, col, row);
+                EventItemsList.Controls.Add(label, 0, row);
 
-                col++;
-                if (col == tableLayoutPanel2.ColumnCount)
-                {
-                    col = 0;
-                    row++;
-                }
+                row++;
             }
-            
-            */
+        }
+
+        async public void LoadUserForEvent()
+        {
+            HttpClient client = new HttpClient();
+            string path = "https://localhost:44320//api";
+            path += "//Event//Entries";
+            string retsz = "";
+            try
+            {
+                retsz = await client.GetStringAsync(path);
+            }
+            catch
+            {
+                MessageBox.Show("There was an issue, Try again later.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var Entries = JsonConvert.DeserializeObject<Dictionary<string, int>>(retsz);
+            if( m_Event == null )
+            {
+                m_Event = new Event();
+            }
+            m_Event.Submissions = Entries;
+
+            int entries = 0;
+            if (m_Event.Submissions.ContainsKey(User.Instance.Username)) {
+                entries = m_Event.Submissions[User.Instance.Username];
+            }
+
+            CurrentEventEntries.Text = "Number of Tickets in Current Event: " + entries.ToString();
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            SubmitToEvent(1);
+        }
+
+        async public void SubmitToEvent(int tokenCount)
+        {
+            HttpClient client = new HttpClient();
+            string path = "https://localhost:44320//api";
+            path += string.Format("//Event//AddSubmission//{0}//{1}", User.Instance.Username, tokenCount);
+            string retsz = "";
+            try
+            {
+                retsz = await client.GetStringAsync(path);
+            }
+            catch
+            {
+                MessageBox.Show("There was an issue, Try again later.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if( retsz == "Success")
+            {
+                // Reset local event token counter
+                LoadUserForEvent();
+            } else
+            {
+                MessageBox.Show(retsz, "Oops..", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            SubmitToEvent(Convert.ToInt32(eventTokenSubmissionCount.Value));
         }
     }
 }

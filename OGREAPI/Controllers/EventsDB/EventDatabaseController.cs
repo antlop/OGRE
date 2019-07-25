@@ -15,8 +15,33 @@ namespace OGREAPI.Controllers
         [HttpGet("AddSubmission/{username}")]
         public ActionResult<string> AddSubmission(string username)
         {
-            EventDatabase.Instance.AddSubmission(username);
-            return "Success";
+            return AddSubmissions(username, 1);
+        }
+
+        [HttpGet("AddSubmission/{username}/{count}")]
+        public ActionResult<string> AddSubmissions(string username, int count)
+        {
+            if (UserDatabase.Instance.UsersDB.ContainsKey(username))
+            {
+                if (UserDatabase.Instance.UsersDB[username].EventTokens >= count)
+                {
+                    while (count > 0) { 
+                        EventDatabase.Instance.AddSubmission(username);
+                        count--;
+                    }
+                    UserDatabase.Instance.UsersDB[username].EventTokens -= count;
+
+                    return "Success";
+                }
+                else
+                {
+                    return "Failure: Not Enough Tokens";
+                }
+            }
+            else
+            {
+                return "Failure: User Not Found";
+            }
         }
 
         [HttpGet("Clear/Submissions")]

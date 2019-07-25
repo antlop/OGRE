@@ -73,11 +73,11 @@ namespace OGREAPI
                     {
                         while (!reader.EndOfStream) {
                             string[] line = reader.ReadLine().Split(';');
-                            if( line.Length < 3 )
+                            if( line.Length < 4 )
                             {
                                 break;
                             }
-                            User user = new User(line[0], line[1], Convert.ToInt32(line[2]));
+                            User user = new User(line[0], line[1], Convert.ToInt32(line[2]), Convert.ToInt32(line[4]));
                             switch (line[3]) {
                                 case "Member":
                                     user.Rank = MemberRanks.MEMBER;

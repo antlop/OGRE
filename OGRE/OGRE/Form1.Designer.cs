@@ -36,15 +36,15 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.EventTab = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.EventWinnableItemsList = new System.Windows.Forms.ListView();
+            this.CurrentEventEntries = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.eventTokenSubmissionCount = new System.Windows.Forms.NumericUpDown();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.EventItemsList = new System.Windows.Forms.TableLayoutPanel();
             this.PendingTab = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.ManageTab = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.MainTabControl.SuspendLayout();
             this.BankTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -56,8 +56,8 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eventTokenSubmissionCount)).BeginInit();
             this.PendingTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // MainTabControl
@@ -74,6 +74,7 @@
             this.MainTabControl.Size = new System.Drawing.Size(800, 450);
             this.MainTabControl.TabIndex = 6;
             this.MainTabControl.Visible = false;
+            this.MainTabControl.SelectedIndexChanged += new System.EventHandler(this.MainTabControl_SelectedIndexChanged);
             // 
             // BankTab
             // 
@@ -153,7 +154,6 @@
             this.EventTab.TabIndex = 1;
             this.EventTab.Text = "Event";
             this.EventTab.UseVisualStyleBackColor = true;
-            this.EventTab.Paint += new System.Windows.Forms.PaintEventHandler(this.EventTab_Paint);
             // 
             // splitContainer2
             // 
@@ -163,27 +163,96 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.label3);
+            this.splitContainer2.Panel1.Controls.Add(this.CurrentEventEntries);
             this.splitContainer2.Panel1.Controls.Add(this.label2);
-            this.splitContainer2.Panel1.Controls.Add(this.numericUpDown1);
+            this.splitContainer2.Panel1.Controls.Add(this.eventTokenSubmissionCount);
             this.splitContainer2.Panel1.Controls.Add(this.button2);
             this.splitContainer2.Panel1.Controls.Add(this.button1);
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.EventWinnableItemsList);
+            this.splitContainer2.Panel2.Controls.Add(this.EventItemsList);
             this.splitContainer2.Size = new System.Drawing.Size(786, 418);
             this.splitContainer2.SplitterDistance = 364;
             this.splitContainer2.TabIndex = 0;
             // 
-            // EventWinnableItemsList
+            // CurrentEventEntries
             // 
-            this.EventWinnableItemsList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.EventWinnableItemsList.Location = new System.Drawing.Point(0, 0);
-            this.EventWinnableItemsList.Name = "EventWinnableItemsList";
-            this.EventWinnableItemsList.Size = new System.Drawing.Size(418, 418);
-            this.EventWinnableItemsList.TabIndex = 0;
-            this.EventWinnableItemsList.UseCompatibleStateImageBehavior = false;
+            this.CurrentEventEntries.AutoSize = true;
+            this.CurrentEventEntries.Location = new System.Drawing.Point(27, 169);
+            this.CurrentEventEntries.Name = "CurrentEventEntries";
+            this.CurrentEventEntries.Size = new System.Drawing.Size(201, 15);
+            this.CurrentEventEntries.TabIndex = 4;
+            this.CurrentEventEntries.Text = "Number of Tickets in Current Event: ";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(27, 101);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(156, 15);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Number Of Banked Tickets:";
+            // 
+            // eventTokenSubmissionCount
+            // 
+            this.eventTokenSubmissionCount.Location = new System.Drawing.Point(30, 253);
+            this.eventTokenSubmissionCount.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.eventTokenSubmissionCount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.eventTokenSubmissionCount.Name = "eventTokenSubmissionCount";
+            this.eventTokenSubmissionCount.Size = new System.Drawing.Size(120, 20);
+            this.eventTokenSubmissionCount.TabIndex = 2;
+            this.eventTokenSubmissionCount.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(30, 208);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(301, 23);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Add Single Ticket";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(156, 250);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(175, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Add Multiple Tickets";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // EventItemsList
+            // 
+            this.EventItemsList.AutoScroll = true;
+            this.EventItemsList.BackColor = System.Drawing.Color.Lime;
+            this.EventItemsList.ColumnCount = 4;
+            this.EventItemsList.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.EventItemsList.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.EventItemsList.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.EventItemsList.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.EventItemsList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.EventItemsList.Location = new System.Drawing.Point(0, 0);
+            this.EventItemsList.Name = "EventItemsList";
+            this.EventItemsList.RowCount = 2;
+            this.EventItemsList.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.EventItemsList.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.EventItemsList.Size = new System.Drawing.Size(418, 418);
+            this.EventItemsList.TabIndex = 1;
             // 
             // PendingTab
             // 
@@ -249,49 +318,6 @@
             this.ManageTab.Text = "Manage";
             this.ManageTab.UseVisualStyleBackColor = true;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(156, 250);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(175, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Add Multiple Tickets";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(30, 208);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(301, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Add Single Ticket";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(30, 253);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 2;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(27, 101);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(156, 15);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Number Of Banked Tickets:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(27, 169);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(201, 15);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Number of Tickets in Current Event: ";
-            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -316,8 +342,8 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.eventTokenSubmissionCount)).EndInit();
             this.PendingTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -335,12 +361,12 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.ListView EventWinnableItemsList;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label CurrentEventEntries;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown eventTokenSubmissionCount;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TableLayoutPanel EventItemsList;
     }
 }
 

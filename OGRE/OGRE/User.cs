@@ -18,6 +18,7 @@ namespace OGRE
         public string Password;
         public MemberRanks Rank;
         public int Version;
+        public int EntryTokens;
 
         private static readonly Lazy<User>
             lazy =
@@ -32,6 +33,7 @@ namespace OGRE
             Password = "";
             Rank = MemberRanks.MEMBER;
             Version = 0;
+            EntryTokens = 0;
         }
     }
 }

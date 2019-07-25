@@ -11,18 +11,20 @@ namespace OGREAPI.Controllers
         public string Password;
         public int BankVersion;
         public MemberRanks Rank;
+        public int EventTokens;
 
-        public User(string name, string password, int bankversion)
+        public User(string name, string password, int bankversion, int eventTokens)
         {
             Name = name;
             Password = password;
             BankVersion = bankversion;
             Rank = MemberRanks.MEMBER;
+            EventTokens = eventTokens;
         }
 
         public override string ToString()
         {
-            return Name + ";" + Password + ";" + BankVersion.ToString() + ";" + Rank.ToString();
+            return Name + ";" + Password + ";" + BankVersion.ToString() + ";" + Rank.ToString() + ";" + EventTokens.ToString();
         }
     }
 }
