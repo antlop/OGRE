@@ -12,6 +12,7 @@ namespace OGREAPI.Controllers
         public static BankDatabase Instance { get { return lazy.Value; } }
         private BankDatabase()
         {
+            /*
             m_Bank = new Bank();
 
             
@@ -29,7 +30,7 @@ namespace OGREAPI.Controllers
 
             Item itemD = new Item(5757, "Ashbringer");
             AddItemToBankTab(itemD, 4);
-            
+            */
         }
 
         /*
@@ -93,7 +94,7 @@ namespace OGREAPI.Controllers
             int count = 0;
             foreach (Grouping tab in m_Bank.BankTabs)
             {
-                if (tab.ItemsDictionary != null && Convert.ToInt32(tab.ViewPermission) <= rank)
+                if (Convert.ToInt32(tab.ViewPermission) <= rank)
                 {
                     str += JsonConvert.SerializeObject(tab);
                     if (count + 1 < m_Bank.BankTabs.Count)

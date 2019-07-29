@@ -11,6 +11,8 @@ namespace OGREAPI.Controllers
         public int ItemID;
         public string Name;
         public int StackSize = 1;
+        public string Sender;
+        public bool Pending = false;
 
         public Item(Item item, int stackSize)
         {

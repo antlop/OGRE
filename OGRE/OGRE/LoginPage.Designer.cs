@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.LoginScreen = new System.Windows.Forms.Panel();
+            this.LoggedInCheckBox = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.PasswordTextBox = new System.Windows.Forms.TextBox();
             this.UsernameTextBox = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.LoggedInCheckBox = new System.Windows.Forms.CheckBox();
             this.LoginScreen.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,6 +51,16 @@
             this.LoginScreen.Name = "LoginScreen";
             this.LoginScreen.Size = new System.Drawing.Size(464, 223);
             this.LoginScreen.TabIndex = 2;
+            // 
+            // LoggedInCheckBox
+            // 
+            this.LoggedInCheckBox.AutoSize = true;
+            this.LoggedInCheckBox.Location = new System.Drawing.Point(169, 197);
+            this.LoggedInCheckBox.Name = "LoggedInCheckBox";
+            this.LoggedInCheckBox.Size = new System.Drawing.Size(134, 19);
+            this.LoggedInCheckBox.TabIndex = 5;
+            this.LoggedInCheckBox.Text = "Keep me Logged in";
+            this.LoggedInCheckBox.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -100,16 +110,6 @@
             this.button1.Text = "Sign In";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
-            // 
-            // LoggedInCheckBox
-            // 
-            this.LoggedInCheckBox.AutoSize = true;
-            this.LoggedInCheckBox.Location = new System.Drawing.Point(169, 197);
-            this.LoggedInCheckBox.Name = "LoggedInCheckBox";
-            this.LoggedInCheckBox.Size = new System.Drawing.Size(134, 19);
-            this.LoggedInCheckBox.TabIndex = 5;
-            this.LoggedInCheckBox.Text = "Keep me Logged in";
-            this.LoggedInCheckBox.UseVisualStyleBackColor = true;
             // 
             // LoginPage
             // 

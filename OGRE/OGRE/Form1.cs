@@ -7,13 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Xml;
+using System.Xml.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using OGRE.Events;
 using OGREAPI.Controllers;
 using Newtonsoft.Json;
+
+// retreave item info
+// https://www.wowhead.com/item=00018604&xml
+
+// retreave item icon
+// https://wow.zamimg.com/images/wow/icons/large/inv_misc_gem_amethyst_03.jpg
 
 namespace OGRE
 {
@@ -32,9 +39,21 @@ namespace OGRE
             page.Show(this);
 
             EventSystem.Instance.RegisterListenerForEvent("LoginEvent", this);
+            EventSystem.Instance.RegisterListenerForEvent("BankItemSelected", this);
+            EventSystem.Instance.RegisterListenerForEvent("RefreshBank", this);
+            EventSystem.Instance.RegisterListenerForEvent("DeleteFromBank", this);
 
             //m_Explorer = new WowExplorer(WowDotNetAPI.Region.US, Locale.en_US, "732aa68878154a04964e12aed8fddfad");
 
+
+            //Assume App is going to be used by non-Leader
+            ManageBankTabButton.Visible = false;
+            AddBankTabButton.Visible = false;
+            NewTabNameTextBox.Visible = false;
+            AddonPathTextBox.Visible = false;
+            FolderDialButton.Visible = false;
+
+            AddonPathTextBox.Text = "C:\\Program Files (x86)\\World of Warcraft\\_classic_\\Interface\\AddOns\\OGRE";
         }
 
         async public void LoadDataForBankList()
@@ -58,12 +77,39 @@ namespace OGRE
             m_Bank = bank;
 
             int count = m_Bank.BankTabs.Count;
-
+            TabComboBox.Items.Clear();
             for (int index = 0; index < count; index++)
             {
-                TabComboBox.Items.Add("Tab " + index.ToString());
+                string name = m_Bank.BankTabs[index].Name;
+                if( name == "Tab") { name += " " + index.ToString(); }
+                TabComboBox.Items.Add(name);
             }
             TabComboBox.SelectedIndex = 0;
+
+            LoadDataForItem(m_Bank.BankTabs[TabComboBox.SelectedIndex].ItemsDictionary.First().Value.ItemID);
+        }
+
+        async public void LoadDataForItem(int id)
+        {
+            HttpClient client = new HttpClient();
+            string path = string.Format("https://www.wowhead.com/item={0}&xml", id);
+            string retsz = "";
+            try
+            {
+                retsz = await client.GetStringAsync(path);
+            }
+            catch
+            {
+                MessageBox.Show("There was an issue, Try again later.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+            var xDoc = XDocument.Parse(retsz);
+            var icon = xDoc.Descendants("icon").Single();
+            SelectedItemIcon.LoadAsync(string.Format("https://wow.zamimg.com/images/wow/icons/large/{0}.jpg", icon.Value));
+            
+            Console.WriteLine(retsz);
         }
 
         public void HandleEvent<T>(string eventName, T obj)
@@ -72,14 +118,26 @@ namespace OGRE
             {
                 MainTabControl.Visible = true;
                 LoadDataForBankList();
+
+                if (User.Instance.Rank == MemberRanks.GUILD_MASTER)
+                {
+                    ManageBankTabButton.Visible = true;
+                    AddBankTabButton.Visible = true;
+                    NewTabNameTextBox.Visible = true;
+                    AddonPathTextBox.Visible = true;
+                    FolderDialButton.Visible = true;
+                }
+            }
+            if( eventName == "BankItemSelected")
+            {
+                LoadDataForItem((obj as Item).ItemID);
+            } 
+            if( eventName == "DeleteFromBank")
+            {
+                DeleteItemFromBank(TabComboBox.SelectedIndex, (obj as Item).ItemID);
             }
         }
         
-        private void TableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-            Console.WriteLine("paint");
-        }
-
         private void TabComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox send = (ComboBox)sender;
@@ -87,6 +145,8 @@ namespace OGRE
             tableLayoutPanel2.Controls.Clear();
             if (tabIndex < m_Bank.BankTabs.Count)
             {
+                if(m_Bank.BankTabs[tabIndex].ItemsDictionary == null) { return; }
+
                 int count = m_Bank.BankTabs[tabIndex].ItemsDictionary.Count;
                 int col = 0;
                 int row = 0;
@@ -96,9 +156,11 @@ namespace OGRE
                     style.Height = 80;
                     tableLayoutPanel2.RowStyles.Add(style);
 
-                    Label label = new Label();
-                    label.Text = item.Name;
-                    tableLayoutPanel2.Controls.Add(label, col, row);
+                    CellForItemList cell = new CellForItemList(item);
+                    
+                    tableLayoutPanel2.Controls.Add(cell, col, row);
+
+                    tableLayoutPanel2.CellBorderStyle = TableLayoutPanelCellBorderStyle.InsetDouble;
 
                     col++;
                     if (col == tableLayoutPanel2.ColumnCount)
@@ -109,6 +171,7 @@ namespace OGRE
                 }
             }
         }
+
 
         private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -222,6 +285,60 @@ namespace OGRE
         private void Button1_Click(object sender, EventArgs e)
         {
             SubmitToEvent(Convert.ToInt32(eventTokenSubmissionCount.Value));
+        }
+
+        private void ManageBankTabButton_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void AddBankTabButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        async private void AddBankTab(string name)
+        {
+            HttpClient client = new HttpClient();
+            string path = "https://localhost:44320//api";
+            path += "//Bank//AddTab//" + name;
+            HttpResponseMessage retsz;
+            try
+            {
+                retsz = await client.PostAsync(path,null);
+            }
+            catch
+            {
+                MessageBox.Show("There was an issue, Try again later.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            LoadDataForBankList();
+        }
+
+        async private void DeleteItemFromBank(int tab, int id)
+        {
+            HttpClient client = new HttpClient();
+            string path = "https://localhost:44320//api";
+            path += "//Bank//" + string.Format("{0}//{1}//{2}", tab, id, 99999);
+            HttpResponseMessage retsz;
+            try
+            {
+                retsz = await client.DeleteAsync(path);
+            }
+            catch
+            {
+                MessageBox.Show("There was an issue, Try again later.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void FolderDialButton_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                AddonPathTextBox.Text = folderBrowserDialog1.SelectedPath;
+            }
+            //AddonPathTextBox.Text = "C:\\Program Files (x86)\\World of Warcraft\\_classic_\\Interface\\AddOns\\OGRE"
         }
     }
 }

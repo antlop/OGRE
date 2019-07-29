@@ -42,9 +42,15 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.EventItemsList = new System.Windows.Forms.TableLayoutPanel();
-            this.PendingTab = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.ManageTab = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.AddBankTabButton = new System.Windows.Forms.Button();
+            this.NewTabNameTextBox = new System.Windows.Forms.TextBox();
+            this.ManageBankTabButton = new System.Windows.Forms.Button();
+            this.SelectedItemIcon = new System.Windows.Forms.PictureBox();
+            this.AddonPathTextBox = new System.Windows.Forms.TextBox();
+            this.FolderDialButton = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.MainTabControl.SuspendLayout();
             this.BankTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -57,15 +63,14 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventTokenSubmissionCount)).BeginInit();
-            this.PendingTab.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SelectedItemIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // MainTabControl
             // 
             this.MainTabControl.Controls.Add(this.BankTab);
             this.MainTabControl.Controls.Add(this.EventTab);
-            this.MainTabControl.Controls.Add(this.PendingTab);
-            this.MainTabControl.Controls.Add(this.ManageTab);
             this.MainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainTabControl.Location = new System.Drawing.Point(0, 0);
             this.MainTabControl.Multiline = true;
@@ -98,6 +103,13 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.label3);
+            this.splitContainer1.Panel1.Controls.Add(this.FolderDialButton);
+            this.splitContainer1.Panel1.Controls.Add(this.AddonPathTextBox);
+            this.splitContainer1.Panel1.Controls.Add(this.NewTabNameTextBox);
+            this.splitContainer1.Panel1.Controls.Add(this.AddBankTabButton);
+            this.splitContainer1.Panel1.Controls.Add(this.ManageBankTabButton);
+            this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.TabComboBox);
             // 
@@ -122,14 +134,14 @@
             this.TabComboBox.FormattingEnabled = true;
             this.TabComboBox.Location = new System.Drawing.Point(3, 24);
             this.TabComboBox.Name = "TabComboBox";
-            this.TabComboBox.Size = new System.Drawing.Size(254, 21);
+            this.TabComboBox.Size = new System.Drawing.Size(203, 21);
             this.TabComboBox.TabIndex = 0;
             this.TabComboBox.SelectedIndexChanged += new System.EventHandler(this.TabComboBox_SelectedIndexChanged);
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.AutoScroll = true;
-            this.tableLayoutPanel2.BackColor = System.Drawing.Color.Yellow;
+            this.tableLayoutPanel2.BackColor = System.Drawing.Color.White;
             this.tableLayoutPanel2.ColumnCount = 4;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -254,69 +266,82 @@
             this.EventItemsList.Size = new System.Drawing.Size(418, 418);
             this.EventItemsList.TabIndex = 1;
             // 
-            // PendingTab
+            // groupBox1
             // 
-            this.PendingTab.Controls.Add(this.tableLayoutPanel3);
-            this.PendingTab.Location = new System.Drawing.Point(4, 22);
-            this.PendingTab.Name = "PendingTab";
-            this.PendingTab.Padding = new System.Windows.Forms.Padding(3);
-            this.PendingTab.Size = new System.Drawing.Size(792, 424);
-            this.PendingTab.TabIndex = 2;
-            this.PendingTab.Text = "Pending";
-            this.PendingTab.UseVisualStyleBackColor = true;
+            this.groupBox1.Controls.Add(this.SelectedItemIcon);
+            this.groupBox1.Location = new System.Drawing.Point(4, 217);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(253, 195);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
             // 
-            // tableLayoutPanel3
+            // AddBankTabButton
             // 
-            this.tableLayoutPanel3.BackColor = System.Drawing.Color.Maroon;
-            this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 30;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(786, 418);
-            this.tableLayoutPanel3.TabIndex = 0;
+            this.AddBankTabButton.Location = new System.Drawing.Point(212, 60);
+            this.AddBankTabButton.Name = "AddBankTabButton";
+            this.AddBankTabButton.Size = new System.Drawing.Size(44, 23);
+            this.AddBankTabButton.TabIndex = 4;
+            this.AddBankTabButton.Text = "Add";
+            this.AddBankTabButton.UseVisualStyleBackColor = true;
             // 
-            // ManageTab
+            // NewTabNameTextBox
             // 
-            this.ManageTab.Location = new System.Drawing.Point(4, 22);
-            this.ManageTab.Name = "ManageTab";
-            this.ManageTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ManageTab.Size = new System.Drawing.Size(792, 424);
-            this.ManageTab.TabIndex = 3;
-            this.ManageTab.Text = "Manage";
-            this.ManageTab.UseVisualStyleBackColor = true;
+            this.NewTabNameTextBox.Location = new System.Drawing.Point(3, 62);
+            this.NewTabNameTextBox.Name = "NewTabNameTextBox";
+            this.NewTabNameTextBox.Size = new System.Drawing.Size(203, 20);
+            this.NewTabNameTextBox.TabIndex = 5;
+            this.NewTabNameTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // ManageBankTabButton
+            // 
+            this.ManageBankTabButton.BackgroundImage = global::OGRE.Properties.Resources._84380;
+            this.ManageBankTabButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ManageBankTabButton.Location = new System.Drawing.Point(226, 24);
+            this.ManageBankTabButton.Name = "ManageBankTabButton";
+            this.ManageBankTabButton.Size = new System.Drawing.Size(25, 23);
+            this.ManageBankTabButton.TabIndex = 3;
+            this.ManageBankTabButton.UseVisualStyleBackColor = true;
+            this.ManageBankTabButton.Click += new System.EventHandler(this.ManageBankTabButton_Click);
+            // 
+            // SelectedItemIcon
+            // 
+            this.SelectedItemIcon.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SelectedItemIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.SelectedItemIcon.Location = new System.Drawing.Point(183, 19);
+            this.SelectedItemIcon.Margin = new System.Windows.Forms.Padding(0);
+            this.SelectedItemIcon.MinimumSize = new System.Drawing.Size(64, 64);
+            this.SelectedItemIcon.Name = "SelectedItemIcon";
+            this.SelectedItemIcon.Size = new System.Drawing.Size(64, 64);
+            this.SelectedItemIcon.TabIndex = 0;
+            this.SelectedItemIcon.TabStop = false;
+            // 
+            // AddonPathTextBox
+            // 
+            this.AddonPathTextBox.Location = new System.Drawing.Point(78, 93);
+            this.AddonPathTextBox.Name = "AddonPathTextBox";
+            this.AddonPathTextBox.Size = new System.Drawing.Size(127, 20);
+            this.AddonPathTextBox.TabIndex = 6;
+            // 
+            // FolderDialButton
+            // 
+            this.FolderDialButton.Location = new System.Drawing.Point(213, 91);
+            this.FolderDialButton.Name = "FolderDialButton";
+            this.FolderDialButton.Size = new System.Drawing.Size(44, 23);
+            this.FolderDialButton.TabIndex = 7;
+            this.FolderDialButton.UseVisualStyleBackColor = true;
+            this.FolderDialButton.Click += new System.EventHandler(this.FolderDialButton_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 96);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(73, 15);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Addon Path:";
             // 
             // MainPage
             // 
@@ -324,7 +349,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.MainTabControl);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainPage";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
@@ -343,7 +368,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.eventTokenSubmissionCount)).EndInit();
-            this.PendingTab.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SelectedItemIcon)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -353,9 +379,6 @@
         private System.Windows.Forms.TabControl MainTabControl;
         private System.Windows.Forms.TabPage BankTab;
         private System.Windows.Forms.TabPage EventTab;
-        private System.Windows.Forms.TabPage PendingTab;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.TabPage ManageTab;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ComboBox TabComboBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -367,6 +390,15 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TableLayoutPanel EventItemsList;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.PictureBox SelectedItemIcon;
+        private System.Windows.Forms.TextBox NewTabNameTextBox;
+        private System.Windows.Forms.Button AddBankTabButton;
+        private System.Windows.Forms.Button ManageBankTabButton;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button FolderDialButton;
+        private System.Windows.Forms.TextBox AddonPathTextBox;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }
 

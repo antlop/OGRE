@@ -79,13 +79,13 @@ namespace OGREAPI
                             }
                             User user = new User(line[0], line[1], Convert.ToInt32(line[2]), Convert.ToInt32(line[4]));
                             switch (line[3]) {
-                                case "Member":
+                                case "MEMBER":
                                     user.Rank = MemberRanks.MEMBER;
                                     break;
-                                case "GuildLeader":
+                                case "GUILD_LEADER":
                                     user.Rank = MemberRanks.GUILD_LEADER;
                                     break;
-                                case "GuildMaster":
+                                case "GUILD_MASTER":
                                     user.Rank = MemberRanks.GUILD_MASTER;
                                     break;
                             }
@@ -106,7 +106,7 @@ namespace OGREAPI
                         string json = reader.ReadLine();
                         var bank = JsonConvert.DeserializeObject<Bank>(json);
 
-                        //BankDatabase.Instance.m_Bank = bank;
+                        BankDatabase.Instance.m_Bank = bank;
                     }
                 }
             }
