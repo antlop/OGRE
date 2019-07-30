@@ -41,8 +41,8 @@ namespace OGREAPI.Controllers
 
         public void AddItemToBankTab(Item item, int TabIndex)
         {
-            CreateAdditionalTabs(TabIndex);
-            m_Bank.BankTabs[TabIndex].AddItem(item);
+            CreateAdditionalTab("");
+            m_Bank.BankTabs[m_Bank.BankTabs.count-1].AddItem(item);
         }
 
         void CreateAdditionalTabs(int TargetIndex)

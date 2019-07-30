@@ -28,12 +28,17 @@ namespace OGREAPI
             WriteDatabasesToFile();
 
 		    Timer t = new Timer(60000); // 1 sec = 1000, 60 sec = 60000
-
 		    t.AutoReset = true;
-
 		    t.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);
-
 		    t.Start();
+
+            #if DEBUG
+
+		    Timer t2 = new Timer(60000); // 1 sec = 1000, 60 sec = 60000
+		    t2.AutoReset = true;
+		    t2.Elapsed += new System.Timers.ElapsedEventHandler(t_AddItem);
+		    t2.Start();
+            #endif
 
             AllocConsole();
         }
@@ -132,6 +137,13 @@ namespace OGREAPI
         void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 	    {
             WriteDatabasesToFile();
+	    }
+
+        void t_AddItem(object sender, System.Timers.ElapsedEventArgs e)
+	    {
+            Random r = new Random();
+            Item item = new Item(r.Next(5000, 30000), "?");
+            BankDatabase.Instance.AddItemToBankTab(item, 100);
 	    }
 
         void WriteDatabasesToFile()
