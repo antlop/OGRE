@@ -16,7 +16,7 @@ namespace OGREAPI.Controllers
 
 		    Random rand = new Random();
             string name = "Anton+" + rand.Next(1, 99999).ToString();
-            User user = new User(name, "Lopez", 0);
+            User user = new User(name, "Lopez", 0, 0);
             UsersDB.Add(user.Name, user);
         }
 

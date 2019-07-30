@@ -41,7 +41,7 @@ namespace OGREAPI.Controllers
         public ActionResult<string> Get(string username, string password)
         {
             //Item item = new Item(Convert.ToInt32(value["ID"]), value["Name"]);
-            User user = new User(username, password, BankDatabase.Instance.GetBankVersionNumber());
+            User user = new User(username, password, BankDatabase.Instance.GetBankVersionNumber(), 0);
             if( UserDatabase.Instance.DatabaseContainsKey(user.Name) )
             {
                 return "Username";
@@ -59,7 +59,7 @@ namespace OGREAPI.Controllers
         public ActionResult<string> Get(int rank, string username, string password)
         {
             //Item item = new Item(Convert.ToInt32(value["ID"]), value["Name"]);
-            User user = new User(username, password, BankDatabase.Instance.GetBankVersionNumber());
+            User user = new User(username, password, BankDatabase.Instance.GetBankVersionNumber(), 0);
             user.Rank = (MemberRanks)rank;
             if (UserDatabase.Instance.DatabaseContainsKey(user.Name))
             {

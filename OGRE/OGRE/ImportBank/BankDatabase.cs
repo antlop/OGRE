@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace OGREAPI.Controllers
 {
@@ -12,10 +11,9 @@ namespace OGREAPI.Controllers
         public static BankDatabase Instance { get { return lazy.Value; } }
         private BankDatabase()
         {
-            /*
             m_Bank = new Bank();
 
-            
+            /*
             Item itemA = new Item(24, "Thunderfury");
             AddItemToBankTab(itemA, 0);
 
@@ -43,8 +41,8 @@ namespace OGREAPI.Controllers
 
         public void AddItemToBankTab(Item item, int TabIndex)
         {
-            CreateAdditionalTab("");
-            m_Bank.BankTabs[m_Bank.BankTabs.count-1].AddItem(item);
+            CreateAdditionalTabs(TabIndex);
+            m_Bank.BankTabs[TabIndex].AddItem(item);
         }
 
         void CreateAdditionalTabs(int TargetIndex)
@@ -53,19 +51,7 @@ namespace OGREAPI.Controllers
             {
                 Grouping grouping = new Grouping();
                 m_Bank.BankTabs.Add(grouping);
-            }
-        }
-
-        public void CreateAdditionalTab(string name) {
-            Grouping grouping = new Grouping();
-            grouping.Name = name;
-            m_Bank.BankTabs.Add(grouping);
-        }
-
-        public void SetTabName(int index, string name) {
-            if( m_Bank.BankTabs.Count < index) {
-                m_Bank.BankTabs[index].Name = name;
-            }
+            } 
         }
 
         public void RemoveItem(int itemID, int tabIndex, int count)
@@ -87,16 +73,17 @@ namespace OGREAPI.Controllers
             }
             return null;
         }
-
+      
         public string GetBankAsJSON(int rank) {
-            string str = "{ \"BankTabs\": [";
+          
+            string str = "{ \"Bank\": {\"Version\": \"" + GetBankVersionNumber() + "\",\"Tabs\": [";
 
             int count = 0;
             foreach (Grouping tab in m_Bank.BankTabs)
             {
-                if (Convert.ToInt32(tab.ViewPermission) <= rank)
+                if (tab.ItemsDictionary != null && Convert.ToInt32(tab.ViewPermission) < rank)
                 {
-                    str += JsonConvert.SerializeObject(tab);
+                    str += tab.ToString();
                     if (count + 1 < m_Bank.BankTabs.Count)
                     {
                         str += ", ";
@@ -104,7 +91,7 @@ namespace OGREAPI.Controllers
                 }
                 count++;
             }
-            return str + "], \"VersionNumber\":" + GetBankVersionNumber() + ", \"WrapVersionNumber\":" + m_Bank.WrapVersionNumber.ToString() + "}";
+            return str + "] } }";
         }
 
         public void IncreaseVersionNumber()

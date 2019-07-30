@@ -34,7 +34,7 @@ namespace OGREAPI
 
             #if DEBUG
 
-		    Timer t2 = new Timer(60000); // 1 sec = 1000, 60 sec = 60000
+		    Timer t2 = new Timer(180000); // 1 sec = 1000, 60 sec = 60000
 		    t2.AutoReset = true;
 		    t2.Elapsed += new System.Timers.ElapsedEventHandler(t_AddItem);
 		    t2.Start();

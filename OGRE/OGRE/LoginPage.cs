@@ -11,13 +11,13 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using OGRE.Events;
 
 namespace OGRE
 {
     public partial class LoginPage : Form
     {
         public HttpClient client;
-        private User user;
         public LoginPage()
         {
             InitializeComponent();
@@ -39,11 +39,23 @@ namespace OGRE
 
         async void Login(string username, string password, int version)
         {
+
+            //EventSystem.Instance.TriggerEvent<Form>("LoginEvent", null);
+            //this.Close();
+            //return;
+
+
             string path = "https://localhost:44320//api";
             path += "//User//" + username + "//" + password + "//" + version.ToString();
             string retsz = "";
-
-            retsz = await client.GetStringAsync(path);
+            try
+            {
+                retsz = await client.GetStringAsync(path);
+            } catch
+            {
+                MessageBox.Show("There was an issue, Try again later.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             string[] split = new string[';'];
             string[] retArray = retsz.Split(';');
@@ -68,11 +80,13 @@ namespace OGRE
                     // save info to save file
                 }
 
+                EventSystem.Instance.TriggerEvent<Form>("LoginEvent", null);
                 this.Close();
             } else
             {
                 MessageBox.Show(retArray[0], "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
     }
 }
