@@ -42,7 +42,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.EventItemsList = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ItemDetailGroupBox = new System.Windows.Forms.GroupBox();
             this.AddBankTabButton = new System.Windows.Forms.Button();
             this.NewTabNameTextBox = new System.Windows.Forms.TextBox();
             this.ManageBankTabButton = new System.Windows.Forms.Button();
@@ -63,7 +63,7 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventTokenSubmissionCount)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.ItemDetailGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SelectedItemIcon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -109,7 +109,7 @@
             this.splitContainer1.Panel1.Controls.Add(this.NewTabNameTextBox);
             this.splitContainer1.Panel1.Controls.Add(this.AddBankTabButton);
             this.splitContainer1.Panel1.Controls.Add(this.ManageBankTabButton);
-            this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.ItemDetailGroupBox);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.TabComboBox);
             // 
@@ -266,15 +266,14 @@
             this.EventItemsList.Size = new System.Drawing.Size(418, 418);
             this.EventItemsList.TabIndex = 1;
             // 
-            // groupBox1
+            // ItemDetailGroupBox
             // 
-            this.groupBox1.Controls.Add(this.SelectedItemIcon);
-            this.groupBox1.Location = new System.Drawing.Point(4, 217);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(253, 195);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.ItemDetailGroupBox.Controls.Add(this.SelectedItemIcon);
+            this.ItemDetailGroupBox.Location = new System.Drawing.Point(4, 217);
+            this.ItemDetailGroupBox.Name = "ItemDetailGroupBox";
+            this.ItemDetailGroupBox.Size = new System.Drawing.Size(253, 195);
+            this.ItemDetailGroupBox.TabIndex = 2;
+            this.ItemDetailGroupBox.TabStop = false;
             // 
             // AddBankTabButton
             // 
@@ -368,7 +367,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.eventTokenSubmissionCount)).EndInit();
-            this.groupBox1.ResumeLayout(false);
+            this.ItemDetailGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SelectedItemIcon)).EndInit();
             this.ResumeLayout(false);
 
@@ -390,7 +389,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TableLayoutPanel EventItemsList;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox ItemDetailGroupBox;
         private System.Windows.Forms.PictureBox SelectedItemIcon;
         private System.Windows.Forms.TextBox NewTabNameTextBox;
         private System.Windows.Forms.Button AddBankTabButton;

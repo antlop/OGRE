@@ -35,6 +35,8 @@ namespace OGRE
             }
 
             LoadDataForItem();
+
+            this.Text = workingItem.Name;
         }
 
         private void ApproveButton_Click(object sender, EventArgs e)
@@ -71,9 +73,10 @@ namespace OGRE
 
 
             var xDoc = XDocument.Parse(retsz);
-            var icon = xDoc.Descendants("icon").Single();
-            IconPictureBox.LoadAsync(string.Format("https://wow.zamimg.com/images/wow/icons/large/{0}.jpg", icon.Value));
-            ItemNameLabel.Text = xDoc.Descendants("name").Single().Value;
+            //var icon = xDoc.Descendants("icon").Single();
+            //Uri uri = new Uri(string.Format("https://wow.zamimg.com/images/wow/icons/large/{0}.jpg", icon.Value));
+            //this.Icon = new Icon(new System.IO.Stream());
+            this.Text = xDoc.Descendants("name").Single().Value;
         }
 
         async public void AddItemToEvent()

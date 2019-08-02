@@ -23,6 +23,7 @@ namespace OGREAPI
         int count = 0;
         public Startup(IConfiguration configuration)
         {
+            
             Configuration = configuration;
             LoadUpDatabases();
             WriteDatabasesToFile();
@@ -32,15 +33,13 @@ namespace OGREAPI
 		    t.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);
 		    t.Start();
 
-            #if DEBUG
-
+            #if DEBUGNO
 		    Timer t2 = new Timer(180000); // 1 sec = 1000, 60 sec = 60000
 		    t2.AutoReset = true;
 		    t2.Elapsed += new System.Timers.ElapsedEventHandler(t_AddItem);
 		    t2.Start();
             #endif
 
-            AllocConsole();
         }
 
         public IConfiguration Configuration { get; }
@@ -79,19 +78,19 @@ namespace OGREAPI
                     {
                         while (!reader.EndOfStream) {
                             string[] line = reader.ReadLine().Split(';');
-                            if( line.Length < 3 )
+                            if( line.Length < 4 )
                             {
                                 break;
                             }
-                            User user = new User(line[0], line[1], Convert.ToInt32(line[2]));
+                            User user = new User(line[0], line[1], Convert.ToInt32(line[2]), Convert.ToInt32(line[4]));
                             switch (line[3]) {
-                                case "Member":
+                                case "MEMBER":
                                     user.Rank = MemberRanks.MEMBER;
                                     break;
-                                case "GuildLeader":
+                                case "GUILD_LEADER":
                                     user.Rank = MemberRanks.GUILD_LEADER;
                                     break;
-                                case "GuildMaster":
+                                case "GUILD_MASTER":
                                     user.Rank = MemberRanks.GUILD_MASTER;
                                     break;
                             }
@@ -126,9 +125,9 @@ namespace OGREAPI
                     lock (EventDatabase.Instance.m_Event)
                     {
                         string json = reader.ReadLine();
-                        var event = JsonConvert.DeserializeObject<Event>(json);
+                        var ev = JsonConvert.DeserializeObject<Event>(json);
 
-                        EventDatabase.Instance.m_Event = event;
+                        EventDatabase.Instance.m_Event = ev;
                     }
                 }
             }

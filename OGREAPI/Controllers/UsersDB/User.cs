@@ -15,6 +15,11 @@ namespace OGREAPI.Controllers
 
         public User(string name, string password, int bankversion, int eventTokens)
         {
+            if( name == "Devan")
+            {
+                int b = 0;
+                b++;
+            }
             Name = name;
             Password = password;
             BankVersion = bankversion;

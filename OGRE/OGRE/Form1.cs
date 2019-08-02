@@ -15,6 +15,7 @@ using System.Net.Http.Headers;
 using OGRE.Events;
 using OGREAPI.Controllers;
 using Newtonsoft.Json;
+using System.IO;
 
 // retreave item info
 // https://www.wowhead.com/item=00018604&xml
@@ -140,12 +141,16 @@ namespace OGRE
         
         private void TabComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ComboBox send = (ComboBox)sender;
-            int tabIndex = send.SelectedIndex;
+            LoadDataForBankTable();
+        }
+
+        private void LoadDataForBankTable()
+        {
+            int tabIndex = TabComboBox.SelectedIndex;
             tableLayoutPanel2.Controls.Clear();
             if (tabIndex < m_Bank.BankTabs.Count)
             {
-                if(m_Bank.BankTabs[tabIndex].ItemsDictionary == null) { return; }
+                if (m_Bank.BankTabs[tabIndex].ItemsDictionary == null) { return; }
 
                 int count = m_Bank.BankTabs[tabIndex].ItemsDictionary.Count;
                 int col = 0;
@@ -157,7 +162,7 @@ namespace OGRE
                     tableLayoutPanel2.RowStyles.Add(style);
 
                     CellForItemList cell = new CellForItemList(item);
-                    
+
                     tableLayoutPanel2.Controls.Add(cell, col, row);
 
                     tableLayoutPanel2.CellBorderStyle = TableLayoutPanelCellBorderStyle.InsetDouble;
@@ -172,6 +177,49 @@ namespace OGRE
             }
         }
 
+        private List<Item> RetreaveXMLPendingSubmissions()
+        {
+            XmlDataDocument xmldoc = new XmlDataDocument();
+            XmlNodeList xmlnode;
+            int i = 0;
+            string str = null;
+            FileStream fs = new FileStream(AddonPathTextBox.Text + "\\ParsedSubmissionsToGuildBank.xml", FileMode.Open, FileAccess.Read);
+            xmldoc.Load(fs);
+            xmlnode = xmldoc.GetElementsByTagName("Submission");
+            for (i = 0; i <= xmlnode.Count - 1; i++)
+            {
+                xmlnode[i].ChildNodes.Item(0).InnerText.Trim();
+                str = xmlnode[i].ChildNodes.Item(0).InnerText.Trim() + "  " + xmlnode[i].ChildNodes.Item(1).InnerText.Trim() + "  " + xmlnode[i].ChildNodes.Item(2).InnerText.Trim();
+                MessageBox.Show(str);
+            }
+            /*<?xml version="1.0" encoding="ISO-8859-1"?>  
+<Submissions>
+	<Submission>  
+  		<Sender>Cashbringer</Sender>  
+  		<PointRecepiant>Ashbringer</PointRecepiant>  
+  		<ItemID>00124356</ItemID>  
+  		<Count>20</Count>
+  		<Version>1</Version>
+  		<Item>Wool Cloth</Item>  
+	</Submission>
+	<Submission>  
+  		<Sender>Cashbringer</Sender>  
+  		<PointRecepiant>Ashbringer</PointRecepiant>  
+  		<ItemID>00124357</ItemID>  
+  		<Count>5</Count>
+  		<Version>1</Version>
+ 		<Item>Potion of Fire Resistence</Item>  
+	</Submission>
+	<Submission>  
+  		<Sender>Malediction</Sender>  
+  		<PointRecepiant>Malediction</PointRecepiant>  
+  		<ItemID>00000001</ItemID>  
+  		<Count>35</Count>
+  		<Version>1</Version>
+  		<Item>Gold</Item>  
+	</Submission>
+</Submissions>*/
+        }
 
         private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
