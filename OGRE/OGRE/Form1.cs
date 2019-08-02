@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -109,7 +109,7 @@ namespace OGRE
             var xDoc = XDocument.Parse(retsz);
             var icon = xDoc.Descendants("icon").Single();
             SelectedItemIcon.LoadAsync(string.Format("https://wow.zamimg.com/images/wow/icons/large/{0}.jpg", icon.Value));
-            
+
             Console.WriteLine(retsz);
         }
 
@@ -132,13 +132,13 @@ namespace OGRE
             if( eventName == "BankItemSelected")
             {
                 LoadDataForItem((obj as Item).ItemID);
-            } 
+            }
             if( eventName == "DeleteFromBank")
             {
                 DeleteItemFromBank(TabComboBox.SelectedIndex, (obj as Item).ItemID);
             }
         }
-        
+
         private void TabComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadDataForBankTable();
@@ -148,37 +148,52 @@ namespace OGRE
         {
             int tabIndex = TabComboBox.SelectedIndex;
             tableLayoutPanel2.Controls.Clear();
+
+            List<Item> ItemList = RetreaveXMLPendingSubmissions();
+
             if (tabIndex < m_Bank.BankTabs.Count)
             {
                 if (m_Bank.BankTabs[tabIndex].ItemsDictionary == null) { return; }
 
                 int count = m_Bank.BankTabs[tabIndex].ItemsDictionary.Count;
-                int col = 0;
-                int row = 0;
-                foreach (OGREAPI.Controllers.Item item in m_Bank.BankTabs[tabIndex].ItemsDictionary.Values)
+
+                foreach (Item item in m_Bank.BankTabs[tabIndex].ItemsDictionary.Values)
                 {
-                    RowStyle style = new RowStyle(SizeType.Absolute);
-                    style.Height = 80;
-                    tableLayoutPanel2.RowStyles.Add(style);
+                    ItemList.Add(item);
+                }
+            }
 
-                    CellForItemList cell = new CellForItemList(item);
+            int col = 0;
+            int row = 0;
+            foreach (Item item in ItemList)
+            {
+                RowStyle style = new RowStyle(SizeType.Absolute);
+                style.Height = 80;
+                tableLayoutPanel2.RowStyles.Add(style);
 
-                    tableLayoutPanel2.Controls.Add(cell, col, row);
+                CellForItemList cell = new CellForItemList(item);
 
-                    tableLayoutPanel2.CellBorderStyle = TableLayoutPanelCellBorderStyle.InsetDouble;
+                tableLayoutPanel2.Controls.Add(cell, col, row);
 
-                    col++;
-                    if (col == tableLayoutPanel2.ColumnCount)
-                    {
-                        col = 0;
-                        row++;
-                    }
+                tableLayoutPanel2.CellBorderStyle = TableLayoutPanelCellBorderStyle.InsetDouble;
+
+                col++;
+                if (col == tableLayoutPanel2.ColumnCount)
+                {
+                    col = 0;
+                    row++;
                 }
             }
         }
 
         private List<Item> RetreaveXMLPendingSubmissions()
         {
+            List<Item> retList = new List<Item>();
+
+            if( User.Instance.Rank == MemberRanks.MEMBER) [
+                return retList;
+            ]
+
             XmlDataDocument xmldoc = new XmlDataDocument();
             XmlNodeList xmlnode;
             int i = 0;
@@ -188,37 +203,20 @@ namespace OGRE
             xmlnode = xmldoc.GetElementsByTagName("Submission");
             for (i = 0; i <= xmlnode.Count - 1; i++)
             {
-                xmlnode[i].ChildNodes.Item(0).InnerText.Trim();
-                str = xmlnode[i].ChildNodes.Item(0).InnerText.Trim() + "  " + xmlnode[i].ChildNodes.Item(1).InnerText.Trim() + "  " + xmlnode[i].ChildNodes.Item(2).InnerText.Trim();
-                MessageBox.Show(str);
+                string submitter = xmlnode[i].ChildNodes.Item(1).InnerText.Trim();
+                int itemID = Convert.ToInt32(xmlnode[i].ChildNodes.Item(2).InnerText.Trim());
+                int stackSize = Convert.ToInt32(xmlnode[i].ChildNodes.Item(3).InnerText.Trim());
+                string itemName = xmlnode[i].ChildNodes.Item(4).InnerText.Trim();
+
+                Item item = new Item(itemID, itemName);
+                item.StackSize = stackSize;
+                item.Sender = submitter;
+                item.Pending = true;
+
+                retList.Add(item);
             }
-            /*<?xml version="1.0" encoding="ISO-8859-1"?>  
-<Submissions>
-	<Submission>  
-  		<Sender>Cashbringer</Sender>  
-  		<PointRecepiant>Ashbringer</PointRecepiant>  
-  		<ItemID>00124356</ItemID>  
-  		<Count>20</Count>
-  		<Version>1</Version>
-  		<Item>Wool Cloth</Item>  
-	</Submission>
-	<Submission>  
-  		<Sender>Cashbringer</Sender>  
-  		<PointRecepiant>Ashbringer</PointRecepiant>  
-  		<ItemID>00124357</ItemID>  
-  		<Count>5</Count>
-  		<Version>1</Version>
- 		<Item>Potion of Fire Resistence</Item>  
-	</Submission>
-	<Submission>  
-  		<Sender>Malediction</Sender>  
-  		<PointRecepiant>Malediction</PointRecepiant>  
-  		<ItemID>00000001</ItemID>  
-  		<Count>35</Count>
-  		<Version>1</Version>
-  		<Item>Gold</Item>  
-	</Submission>
-</Submissions>*/
+            return retList;
+            /**/
         }
 
         private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
