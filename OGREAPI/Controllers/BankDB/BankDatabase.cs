@@ -43,8 +43,20 @@ namespace OGREAPI.Controllers
 
         public void AddItemToBankTab(Item item, int TabIndex)
         {
-            CreateAdditionalTab("");
-            m_Bank.BankTabs[m_Bank.BankTabs.Count-1].AddItem(item);
+            if (TabIndex >= m_Bank.BankTabs.Count)
+            {
+                CreateAdditionalTab("");
+                m_Bank.BankTabs[m_Bank.BankTabs.Count - 1].AddItem(item);
+            } else
+            {
+                if (m_Bank.BankTabs[TabIndex].ItemsDictionary.ContainsKey(item.ItemID))
+                {
+                    m_Bank.BankTabs[TabIndex].ItemsDictionary[item.ItemID].StackSize += item.StackSize;
+                } else
+                {
+                    m_Bank.BankTabs[TabIndex].AddItem(item);
+                }
+            }
         }
 
         void CreateAdditionalTabs(int TargetIndex)

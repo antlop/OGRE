@@ -55,6 +55,7 @@
             // LoggedInCheckBox
             // 
             this.LoggedInCheckBox.AutoSize = true;
+            this.LoggedInCheckBox.Enabled = false;
             this.LoggedInCheckBox.Location = new System.Drawing.Point(169, 197);
             this.LoggedInCheckBox.Name = "LoggedInCheckBox";
             this.LoggedInCheckBox.Size = new System.Drawing.Size(134, 19);

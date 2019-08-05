@@ -41,7 +41,8 @@ namespace OGRE
 
         private void ApproveButton_Click(object sender, EventArgs e)
         {
-
+            EventSystem.Instance.TriggerEvent("ApprovePending", workingItem);
+            this.Close();
         }
 
         private void AddItemToEventButton_Click(object sender, EventArgs e)
@@ -52,7 +53,9 @@ namespace OGRE
 
         private void RemoveItemButton_Click(object sender, EventArgs e)
         {
-            EventSystem.Instance.TriggerEvent("DeleteFromBank", workingItem);
+            Item item = new Item(workingItem, (int)StackCountNumericUpDown.Value);
+            EventSystem.Instance.TriggerEvent("DeleteFromBank", item);
+            this.Close();
         }
 
 
@@ -77,6 +80,8 @@ namespace OGRE
             //Uri uri = new Uri(string.Format("https://wow.zamimg.com/images/wow/icons/large/{0}.jpg", icon.Value));
             //this.Icon = new Icon(new System.IO.Stream());
             this.Text = xDoc.Descendants("name").Single().Value;
+
+            StackCountNumericUpDown.Value = workingItem.StackSize;
         }
 
         async public void AddItemToEvent()
@@ -94,6 +99,8 @@ namespace OGRE
                 MessageBox.Show("There was an issue, Try again later.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            EventSystem.Instance.TriggerEvent<Item>("RefreshBankList", null);
         }
     }
 }

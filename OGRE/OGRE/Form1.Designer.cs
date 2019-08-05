@@ -31,40 +31,48 @@
             this.MainTabControl = new System.Windows.Forms.TabControl();
             this.BankTab = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.label3 = new System.Windows.Forms.Label();
+            this.FolderDialButton = new System.Windows.Forms.Button();
+            this.AddonPathTextBox = new System.Windows.Forms.TextBox();
+            this.NewTabNameTextBox = new System.Windows.Forms.TextBox();
+            this.AddBankTabButton = new System.Windows.Forms.Button();
+            this.ManageBankTabButton = new System.Windows.Forms.Button();
+            this.ItemDetailGroupBox = new System.Windows.Forms.GroupBox();
+            this.BankItemManage = new System.Windows.Forms.Button();
+            this.SelectedItemIcon = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.TabComboBox = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.BankListBox = new System.Windows.Forms.ListBox();
             this.EventTab = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.CurrentEventEntries = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.BankedTicketsLabel = new System.Windows.Forms.Label();
             this.eventTokenSubmissionCount = new System.Windows.Forms.NumericUpDown();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.EventItemsList = new System.Windows.Forms.TableLayoutPanel();
-            this.ItemDetailGroupBox = new System.Windows.Forms.GroupBox();
-            this.AddBankTabButton = new System.Windows.Forms.Button();
-            this.NewTabNameTextBox = new System.Windows.Forms.TextBox();
-            this.ManageBankTabButton = new System.Windows.Forms.Button();
-            this.SelectedItemIcon = new System.Windows.Forms.PictureBox();
-            this.AddonPathTextBox = new System.Windows.Forms.TextBox();
-            this.FolderDialButton = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.EventItemsList = new System.Windows.Forms.ListBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.ManagementToolsBox = new System.Windows.Forms.GroupBox();
+            this.SelectedItemLabel = new System.Windows.Forms.Label();
+            this.EventWinnerButton = new System.Windows.Forms.Button();
+            this.RemoveEventItemButton = new System.Windows.Forms.Button();
+            this.EventWinnerLabel = new System.Windows.Forms.Label();
+            this.ManageSubmissionsButton = new System.Windows.Forms.Button();
             this.MainTabControl.SuspendLayout();
             this.BankTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.ItemDetailGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SelectedItemIcon)).BeginInit();
             this.EventTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventTokenSubmissionCount)).BeginInit();
-            this.ItemDetailGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SelectedItemIcon)).BeginInit();
+            this.ManagementToolsBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainTabControl
@@ -115,10 +123,97 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel2);
+            this.splitContainer1.Panel2.Controls.Add(this.BankListBox);
             this.splitContainer1.Size = new System.Drawing.Size(786, 418);
             this.splitContainer1.SplitterDistance = 262;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 96);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(73, 15);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Addon Path:";
+            // 
+            // FolderDialButton
+            // 
+            this.FolderDialButton.Location = new System.Drawing.Point(213, 91);
+            this.FolderDialButton.Name = "FolderDialButton";
+            this.FolderDialButton.Size = new System.Drawing.Size(44, 23);
+            this.FolderDialButton.TabIndex = 7;
+            this.FolderDialButton.UseVisualStyleBackColor = true;
+            this.FolderDialButton.Click += new System.EventHandler(this.FolderDialButton_Click);
+            // 
+            // AddonPathTextBox
+            // 
+            this.AddonPathTextBox.Location = new System.Drawing.Point(78, 93);
+            this.AddonPathTextBox.Name = "AddonPathTextBox";
+            this.AddonPathTextBox.Size = new System.Drawing.Size(127, 20);
+            this.AddonPathTextBox.TabIndex = 6;
+            // 
+            // NewTabNameTextBox
+            // 
+            this.NewTabNameTextBox.Location = new System.Drawing.Point(3, 62);
+            this.NewTabNameTextBox.Name = "NewTabNameTextBox";
+            this.NewTabNameTextBox.Size = new System.Drawing.Size(203, 20);
+            this.NewTabNameTextBox.TabIndex = 5;
+            this.NewTabNameTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // AddBankTabButton
+            // 
+            this.AddBankTabButton.Location = new System.Drawing.Point(212, 60);
+            this.AddBankTabButton.Name = "AddBankTabButton";
+            this.AddBankTabButton.Size = new System.Drawing.Size(44, 23);
+            this.AddBankTabButton.TabIndex = 4;
+            this.AddBankTabButton.Text = "Add";
+            this.AddBankTabButton.UseVisualStyleBackColor = true;
+            // 
+            // ManageBankTabButton
+            // 
+            this.ManageBankTabButton.BackgroundImage = global::OGRE.Properties.Resources._84380;
+            this.ManageBankTabButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ManageBankTabButton.Location = new System.Drawing.Point(226, 24);
+            this.ManageBankTabButton.Name = "ManageBankTabButton";
+            this.ManageBankTabButton.Size = new System.Drawing.Size(25, 23);
+            this.ManageBankTabButton.TabIndex = 3;
+            this.ManageBankTabButton.UseVisualStyleBackColor = true;
+            this.ManageBankTabButton.Click += new System.EventHandler(this.ManageBankTabButton_Click);
+            // 
+            // ItemDetailGroupBox
+            // 
+            this.ItemDetailGroupBox.Controls.Add(this.BankItemManage);
+            this.ItemDetailGroupBox.Controls.Add(this.SelectedItemIcon);
+            this.ItemDetailGroupBox.Location = new System.Drawing.Point(4, 217);
+            this.ItemDetailGroupBox.Name = "ItemDetailGroupBox";
+            this.ItemDetailGroupBox.Size = new System.Drawing.Size(253, 195);
+            this.ItemDetailGroupBox.TabIndex = 2;
+            this.ItemDetailGroupBox.TabStop = false;
+            // 
+            // BankItemManage
+            // 
+            this.BankItemManage.Location = new System.Drawing.Point(183, 86);
+            this.BankItemManage.Name = "BankItemManage";
+            this.BankItemManage.Size = new System.Drawing.Size(64, 23);
+            this.BankItemManage.TabIndex = 9;
+            this.BankItemManage.Text = "Manage";
+            this.BankItemManage.UseVisualStyleBackColor = true;
+            this.BankItemManage.Click += new System.EventHandler(this.BankItemManage_Click);
+            // 
+            // SelectedItemIcon
+            // 
+            this.SelectedItemIcon.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SelectedItemIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.SelectedItemIcon.Location = new System.Drawing.Point(183, 19);
+            this.SelectedItemIcon.Margin = new System.Windows.Forms.Padding(0);
+            this.SelectedItemIcon.MinimumSize = new System.Drawing.Size(64, 64);
+            this.SelectedItemIcon.Name = "SelectedItemIcon";
+            this.SelectedItemIcon.Size = new System.Drawing.Size(64, 64);
+            this.SelectedItemIcon.TabIndex = 0;
+            this.SelectedItemIcon.TabStop = false;
             // 
             // label1
             // 
@@ -138,23 +233,15 @@
             this.TabComboBox.TabIndex = 0;
             this.TabComboBox.SelectedIndexChanged += new System.EventHandler(this.TabComboBox_SelectedIndexChanged);
             // 
-            // tableLayoutPanel2
+            // BankListBox
             // 
-            this.tableLayoutPanel2.AutoScroll = true;
-            this.tableLayoutPanel2.BackColor = System.Drawing.Color.White;
-            this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(518, 416);
-            this.tableLayoutPanel2.TabIndex = 0;
+            this.BankListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BankListBox.FormattingEnabled = true;
+            this.BankListBox.Location = new System.Drawing.Point(0, 0);
+            this.BankListBox.Name = "BankListBox";
+            this.BankListBox.Size = new System.Drawing.Size(518, 416);
+            this.BankListBox.TabIndex = 0;
+            this.BankListBox.SelectedIndexChanged += new System.EventHandler(this.BankListBox_SelectedIndexChanged);
             // 
             // EventTab
             // 
@@ -175,8 +262,9 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.ManagementToolsBox);
             this.splitContainer2.Panel1.Controls.Add(this.CurrentEventEntries);
-            this.splitContainer2.Panel1.Controls.Add(this.label2);
+            this.splitContainer2.Panel1.Controls.Add(this.BankedTicketsLabel);
             this.splitContainer2.Panel1.Controls.Add(this.eventTokenSubmissionCount);
             this.splitContainer2.Panel1.Controls.Add(this.button2);
             this.splitContainer2.Panel1.Controls.Add(this.button1);
@@ -191,24 +279,25 @@
             // CurrentEventEntries
             // 
             this.CurrentEventEntries.AutoSize = true;
-            this.CurrentEventEntries.Location = new System.Drawing.Point(27, 169);
+            this.CurrentEventEntries.Location = new System.Drawing.Point(27, 60);
             this.CurrentEventEntries.Name = "CurrentEventEntries";
             this.CurrentEventEntries.Size = new System.Drawing.Size(201, 15);
             this.CurrentEventEntries.TabIndex = 4;
             this.CurrentEventEntries.Text = "Number of Tickets in Current Event: ";
             // 
-            // label2
+            // BankedTicketsLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(27, 101);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(156, 15);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Number Of Banked Tickets:";
+            this.BankedTicketsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.BankedTicketsLabel.AutoSize = true;
+            this.BankedTicketsLabel.Location = new System.Drawing.Point(27, 17);
+            this.BankedTicketsLabel.Name = "BankedTicketsLabel";
+            this.BankedTicketsLabel.Size = new System.Drawing.Size(156, 15);
+            this.BankedTicketsLabel.TabIndex = 3;
+            this.BankedTicketsLabel.Text = "Number Of Banked Tickets:";
             // 
             // eventTokenSubmissionCount
             // 
-            this.eventTokenSubmissionCount.Location = new System.Drawing.Point(30, 253);
+            this.eventTokenSubmissionCount.Location = new System.Drawing.Point(30, 136);
             this.eventTokenSubmissionCount.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -230,7 +319,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(30, 208);
+            this.button2.Location = new System.Drawing.Point(30, 94);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(301, 23);
             this.button2.TabIndex = 1;
@@ -240,7 +329,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(156, 250);
+            this.button1.Location = new System.Drawing.Point(156, 136);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(175, 23);
             this.button1.TabIndex = 0;
@@ -250,97 +339,78 @@
             // 
             // EventItemsList
             // 
-            this.EventItemsList.AutoScroll = true;
-            this.EventItemsList.BackColor = System.Drawing.Color.Lime;
-            this.EventItemsList.ColumnCount = 4;
-            this.EventItemsList.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.EventItemsList.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.EventItemsList.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.EventItemsList.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.EventItemsList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.EventItemsList.FormattingEnabled = true;
             this.EventItemsList.Location = new System.Drawing.Point(0, 0);
             this.EventItemsList.Name = "EventItemsList";
-            this.EventItemsList.RowCount = 2;
-            this.EventItemsList.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.EventItemsList.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.EventItemsList.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.EventItemsList.Size = new System.Drawing.Size(418, 418);
-            this.EventItemsList.TabIndex = 1;
+            this.EventItemsList.TabIndex = 0;
+            this.EventItemsList.SelectedIndexChanged += new System.EventHandler(this.EventItemsList_SelectedIndexChanged);
             // 
-            // ItemDetailGroupBox
+            // ManagementToolsBox
             // 
-            this.ItemDetailGroupBox.Controls.Add(this.SelectedItemIcon);
-            this.ItemDetailGroupBox.Location = new System.Drawing.Point(4, 217);
-            this.ItemDetailGroupBox.Name = "ItemDetailGroupBox";
-            this.ItemDetailGroupBox.Size = new System.Drawing.Size(253, 195);
-            this.ItemDetailGroupBox.TabIndex = 2;
-            this.ItemDetailGroupBox.TabStop = false;
+            this.ManagementToolsBox.Controls.Add(this.ManageSubmissionsButton);
+            this.ManagementToolsBox.Controls.Add(this.EventWinnerLabel);
+            this.ManagementToolsBox.Controls.Add(this.RemoveEventItemButton);
+            this.ManagementToolsBox.Controls.Add(this.EventWinnerButton);
+            this.ManagementToolsBox.Controls.Add(this.SelectedItemLabel);
+            this.ManagementToolsBox.Location = new System.Drawing.Point(30, 183);
+            this.ManagementToolsBox.Name = "ManagementToolsBox";
+            this.ManagementToolsBox.Size = new System.Drawing.Size(301, 230);
+            this.ManagementToolsBox.TabIndex = 5;
+            this.ManagementToolsBox.TabStop = false;
+            this.ManagementToolsBox.Text = "Management Tools";
             // 
-            // AddBankTabButton
+            // SelectedItemLabel
             // 
-            this.AddBankTabButton.Location = new System.Drawing.Point(212, 60);
-            this.AddBankTabButton.Name = "AddBankTabButton";
-            this.AddBankTabButton.Size = new System.Drawing.Size(44, 23);
-            this.AddBankTabButton.TabIndex = 4;
-            this.AddBankTabButton.Text = "Add";
-            this.AddBankTabButton.UseVisualStyleBackColor = true;
+            this.SelectedItemLabel.AutoEllipsis = true;
+            this.SelectedItemLabel.AutoSize = true;
+            this.SelectedItemLabel.Location = new System.Drawing.Point(6, 93);
+            this.SelectedItemLabel.Name = "SelectedItemLabel";
+            this.SelectedItemLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.SelectedItemLabel.Size = new System.Drawing.Size(41, 15);
+            this.SelectedItemLabel.TabIndex = 0;
+            this.SelectedItemLabel.Text = "label2";
+            this.SelectedItemLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // NewTabNameTextBox
+            // EventWinnerButton
             // 
-            this.NewTabNameTextBox.Location = new System.Drawing.Point(3, 62);
-            this.NewTabNameTextBox.Name = "NewTabNameTextBox";
-            this.NewTabNameTextBox.Size = new System.Drawing.Size(203, 20);
-            this.NewTabNameTextBox.TabIndex = 5;
-            this.NewTabNameTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.EventWinnerButton.Location = new System.Drawing.Point(6, 43);
+            this.EventWinnerButton.Name = "EventWinnerButton";
+            this.EventWinnerButton.Size = new System.Drawing.Size(175, 23);
+            this.EventWinnerButton.TabIndex = 6;
+            this.EventWinnerButton.Text = "Roll For Winner";
+            this.EventWinnerButton.UseVisualStyleBackColor = true;
+            this.EventWinnerButton.Click += new System.EventHandler(this.EventWinnerButton_Click);
             // 
-            // ManageBankTabButton
+            // RemoveEventItemButton
             // 
-            this.ManageBankTabButton.BackgroundImage = global::OGRE.Properties.Resources._84380;
-            this.ManageBankTabButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ManageBankTabButton.Location = new System.Drawing.Point(226, 24);
-            this.ManageBankTabButton.Name = "ManageBankTabButton";
-            this.ManageBankTabButton.Size = new System.Drawing.Size(25, 23);
-            this.ManageBankTabButton.TabIndex = 3;
-            this.ManageBankTabButton.UseVisualStyleBackColor = true;
-            this.ManageBankTabButton.Click += new System.EventHandler(this.ManageBankTabButton_Click);
+            this.RemoveEventItemButton.Location = new System.Drawing.Point(6, 111);
+            this.RemoveEventItemButton.Name = "RemoveEventItemButton";
+            this.RemoveEventItemButton.Size = new System.Drawing.Size(175, 23);
+            this.RemoveEventItemButton.TabIndex = 7;
+            this.RemoveEventItemButton.Text = "Remove Item From Event";
+            this.RemoveEventItemButton.UseVisualStyleBackColor = true;
+            this.RemoveEventItemButton.Click += new System.EventHandler(this.RemoveEventItemButton_Click);
             // 
-            // SelectedItemIcon
+            // EventWinnerLabel
             // 
-            this.SelectedItemIcon.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.SelectedItemIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.SelectedItemIcon.Location = new System.Drawing.Point(183, 19);
-            this.SelectedItemIcon.Margin = new System.Windows.Forms.Padding(0);
-            this.SelectedItemIcon.MinimumSize = new System.Drawing.Size(64, 64);
-            this.SelectedItemIcon.Name = "SelectedItemIcon";
-            this.SelectedItemIcon.Size = new System.Drawing.Size(64, 64);
-            this.SelectedItemIcon.TabIndex = 0;
-            this.SelectedItemIcon.TabStop = false;
+            this.EventWinnerLabel.AutoSize = true;
+            this.EventWinnerLabel.Location = new System.Drawing.Point(187, 48);
+            this.EventWinnerLabel.Name = "EventWinnerLabel";
+            this.EventWinnerLabel.Size = new System.Drawing.Size(70, 15);
+            this.EventWinnerLabel.TabIndex = 8;
+            this.EventWinnerLabel.Text = "...pending...";
             // 
-            // AddonPathTextBox
+            // ManageSubmissionsButton
             // 
-            this.AddonPathTextBox.Location = new System.Drawing.Point(78, 93);
-            this.AddonPathTextBox.Name = "AddonPathTextBox";
-            this.AddonPathTextBox.Size = new System.Drawing.Size(127, 20);
-            this.AddonPathTextBox.TabIndex = 6;
-            // 
-            // FolderDialButton
-            // 
-            this.FolderDialButton.Location = new System.Drawing.Point(213, 91);
-            this.FolderDialButton.Name = "FolderDialButton";
-            this.FolderDialButton.Size = new System.Drawing.Size(44, 23);
-            this.FolderDialButton.TabIndex = 7;
-            this.FolderDialButton.UseVisualStyleBackColor = true;
-            this.FolderDialButton.Click += new System.EventHandler(this.FolderDialButton_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 96);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(73, 15);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Addon Path:";
+            this.ManageSubmissionsButton.Location = new System.Drawing.Point(6, 201);
+            this.ManageSubmissionsButton.Name = "ManageSubmissionsButton";
+            this.ManageSubmissionsButton.Size = new System.Drawing.Size(289, 23);
+            this.ManageSubmissionsButton.TabIndex = 9;
+            this.ManageSubmissionsButton.Text = "Manage Submissions";
+            this.ManageSubmissionsButton.UseVisualStyleBackColor = true;
             // 
             // MainPage
             // 
@@ -360,6 +430,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.ItemDetailGroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SelectedItemIcon)).EndInit();
             this.EventTab.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
@@ -367,8 +439,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.eventTokenSubmissionCount)).EndInit();
-            this.ItemDetailGroupBox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SelectedItemIcon)).EndInit();
+            this.ManagementToolsBox.ResumeLayout(false);
+            this.ManagementToolsBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -380,15 +452,13 @@
         private System.Windows.Forms.TabPage EventTab;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ComboBox TabComboBox;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.Label CurrentEventEntries;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label BankedTicketsLabel;
         private System.Windows.Forms.NumericUpDown eventTokenSubmissionCount;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TableLayoutPanel EventItemsList;
         private System.Windows.Forms.GroupBox ItemDetailGroupBox;
         private System.Windows.Forms.PictureBox SelectedItemIcon;
         private System.Windows.Forms.TextBox NewTabNameTextBox;
@@ -398,6 +468,15 @@
         private System.Windows.Forms.Button FolderDialButton;
         private System.Windows.Forms.TextBox AddonPathTextBox;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.ListBox EventItemsList;
+        private System.Windows.Forms.ListBox BankListBox;
+        private System.Windows.Forms.Button BankItemManage;
+        private System.Windows.Forms.GroupBox ManagementToolsBox;
+        private System.Windows.Forms.Button ManageSubmissionsButton;
+        private System.Windows.Forms.Label EventWinnerLabel;
+        private System.Windows.Forms.Button RemoveEventItemButton;
+        private System.Windows.Forms.Button EventWinnerButton;
+        private System.Windows.Forms.Label SelectedItemLabel;
     }
 }
 

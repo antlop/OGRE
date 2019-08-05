@@ -63,6 +63,12 @@ namespace OGREAPI.Controllers
             BankDatabase.Instance.AddItemToBankTab(item, 0);
         }
 
+        [HttpPut("AddItem")]
+        public void PutNewItem([FromBody] Item item)
+        {
+            BankDatabase.Instance.AddItemToBankTab(item, 0);
+        }
+
         // DELETE api/values/1/103/1
         [HttpDelete("{tab}/{id}/{count}")]
         public void Delete(int tab, int id, int count)

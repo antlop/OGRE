@@ -31,6 +31,8 @@
             this.ApproveButton = new System.Windows.Forms.Button();
             this.AddItemToEventButton = new System.Windows.Forms.Button();
             this.RemoveItemButton = new System.Windows.Forms.Button();
+            this.StackCountNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.StackCountNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // ApproveButton
@@ -56,18 +58,41 @@
             // 
             // RemoveItemButton
             // 
-            this.RemoveItemButton.Location = new System.Drawing.Point(25, 117);
+            this.RemoveItemButton.Location = new System.Drawing.Point(102, 117);
             this.RemoveItemButton.Name = "RemoveItemButton";
-            this.RemoveItemButton.Size = new System.Drawing.Size(238, 41);
+            this.RemoveItemButton.Size = new System.Drawing.Size(161, 41);
             this.RemoveItemButton.TabIndex = 2;
-            this.RemoveItemButton.Text = "Remove Item";
+            this.RemoveItemButton.Text = "Remove Item/s";
             this.RemoveItemButton.UseVisualStyleBackColor = true;
             this.RemoveItemButton.Click += new System.EventHandler(this.RemoveItemButton_Click);
+            // 
+            // StackCountNumericUpDown
+            // 
+            this.StackCountNumericUpDown.Location = new System.Drawing.Point(25, 129);
+            this.StackCountNumericUpDown.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.StackCountNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.StackCountNumericUpDown.Name = "StackCountNumericUpDown";
+            this.StackCountNumericUpDown.Size = new System.Drawing.Size(71, 20);
+            this.StackCountNumericUpDown.TabIndex = 3;
+            this.StackCountNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // BankManagementPopup
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(295, 184);
+            this.Controls.Add(this.StackCountNumericUpDown);
             this.Controls.Add(this.RemoveItemButton);
             this.Controls.Add(this.AddItemToEventButton);
             this.Controls.Add(this.ApproveButton);
@@ -77,6 +102,7 @@
             this.Name = "BankManagementPopup";
             this.ShowInTaskbar = false;
             this.Text = "Management";
+            ((System.ComponentModel.ISupportInitialize)(this.StackCountNumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -86,5 +112,6 @@
         private System.Windows.Forms.Button ApproveButton;
         private System.Windows.Forms.Button AddItemToEventButton;
         private System.Windows.Forms.Button RemoveItemButton;
+        private System.Windows.Forms.NumericUpDown StackCountNumericUpDown;
     }
 }

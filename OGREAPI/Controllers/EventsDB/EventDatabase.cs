@@ -42,6 +42,28 @@ namespace OGREAPI.Controllers
             }
         }
 
+        public void RemoveItem(string item)
+        {
+            if( m_Event.WinnableItems.ContainsKey(item))
+            {
+                m_Event.WinnableItems.Remove(item);
+            }
+        }
+
+        public bool RemoveSubmission(string name)
+        {
+            if (m_Event.Submissions.ContainsKey(name))
+            {
+                m_Event.Submissions[name] -= 1;
+                if( m_Event.Submissions[name] == 0)
+                {
+                    m_Event.Submissions.Remove(name);
+                }
+                return true;
+            }
+            return false;
+        }
+
         public void ResetEvent()
         {
             ResetSubmission();
