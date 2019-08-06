@@ -80,12 +80,14 @@ namespace OGREAPI.Controllers
             }
         }
 
-        public void RemoveItem(int itemID, int tabIndex, int count)
+        public bool RemoveItem(int itemID, int tabIndex, int count)
         {
             if( tabIndex < m_Bank.BankTabs.Count )
             {
-                m_Bank.BankTabs[tabIndex].RemoveItem(itemID, count);
+                return m_Bank.BankTabs[tabIndex].RemoveItem(itemID, count);
             }
+
+            return true;
         }
 
         public Item GetItemWithID(int itemID)

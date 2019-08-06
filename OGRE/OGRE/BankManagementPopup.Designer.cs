@@ -97,6 +97,7 @@
             this.Controls.Add(this.AddItemToEventButton);
             this.Controls.Add(this.ApproveButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "BankManagementPopup";

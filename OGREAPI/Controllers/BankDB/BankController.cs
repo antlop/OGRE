@@ -71,9 +71,13 @@ namespace OGREAPI.Controllers
 
         // DELETE api/values/1/103/1
         [HttpDelete("{tab}/{id}/{count}")]
-        public void Delete(int tab, int id, int count)
+        public ActionResult<string> Delete(int tab, int id, int count)
         {
-            BankDatabase.Instance.RemoveItem(id, tab, count);
+            if( BankDatabase.Instance.RemoveItem(id, tab, count) )
+            {
+                return "Still Available";
+            }
+            return "Deleted";
         }
     }
 }

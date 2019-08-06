@@ -116,6 +116,7 @@
             // 
             // LoginPage
             // 
+            this.AcceptButton = this.button1;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(464, 223);

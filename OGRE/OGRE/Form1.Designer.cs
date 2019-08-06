@@ -236,11 +236,13 @@
             // BankListBox
             // 
             this.BankListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BankListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.BankListBox.FormattingEnabled = true;
             this.BankListBox.Location = new System.Drawing.Point(0, 0);
             this.BankListBox.Name = "BankListBox";
             this.BankListBox.Size = new System.Drawing.Size(518, 416);
             this.BankListBox.TabIndex = 0;
+            this.BankListBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.BankListBox_DrawItem);
             this.BankListBox.SelectedIndexChanged += new System.EventHandler(this.BankListBox_SelectedIndexChanged);
             // 
             // EventTab
@@ -423,6 +425,7 @@
             this.Name = "MainPage";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "OGRE";
+            this.Shown += new System.EventHandler(this.MainPage_Shown);
             this.MainTabControl.ResumeLayout(false);
             this.BankTab.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);

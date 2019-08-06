@@ -23,6 +23,7 @@ namespace OGRE
             InitializeComponent();
             client = new HttpClient();
 
+            this.BringToFront();
             //load in preferences from save file
             //   if keep me logged in is On then fill username/password and Login(User.Instance.Username, User.Instance.Password, User.Instance.Version);
         }

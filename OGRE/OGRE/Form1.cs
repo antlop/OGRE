@@ -41,13 +41,12 @@ namespace OGRE
             InitializeComponent();
             user = User.Instance;
 
-            LoginPage page = new LoginPage();
-            page.Show(this);
 
             EventSystem.Instance.RegisterListenerForEvent("LoginEvent", this);
             EventSystem.Instance.RegisterListenerForEvent("BankItemSelected", this);
             EventSystem.Instance.RegisterListenerForEvent("RefreshBank", this);
             EventSystem.Instance.RegisterListenerForEvent("DeleteFromBank", this);
+            EventSystem.Instance.RegisterListenerForEvent("DeleteFromEvent", this);
             EventSystem.Instance.RegisterListenerForEvent("ApprovePending", this);
             EventSystem.Instance.RegisterListenerForEvent("RefreshBankList", this);
 
@@ -64,6 +63,12 @@ namespace OGRE
             ManagementToolsBox.Visible = false;
 
             AddonPathTextBox.Text = "C:\\Program Files (x86)\\World of Warcraft\\_classic_\\Interface\\AddOns\\OGRE";
+        }
+
+        private void MainPage_Shown(object sender, EventArgs e)
+        {
+            LoginPage page = new LoginPage();
+            page.Show(this);
         }
 
         async public void LoadDataForBankList(bool UpdateTable = false)
@@ -128,10 +133,15 @@ namespace OGRE
                 return;
             }
 
-
-            var xDoc = XDocument.Parse(retsz);
-            var icon = xDoc.Descendants("icon").Single();
-            SelectedItemIcon.LoadAsync(string.Format("https://wow.zamimg.com/images/wow/icons/large/{0}.jpg", icon.Value));
+            try
+            {
+                var xDoc = XDocument.Parse(retsz);
+                var icon = xDoc.Descendants("icon").Single();
+                SelectedItemIcon.LoadAsync(string.Format("https://wow.zamimg.com/images/wow/icons/large/{0}.jpg", icon.Value));
+            }
+            catch {
+                Console.WriteLine("Error - Loading XDocument from Wowhead.");
+            }
 
             Console.WriteLine(retsz);
         }
@@ -168,6 +178,8 @@ namespace OGRE
             if( eventName == "DeleteFromBank")
             {
                 DeleteItemFromBank(TabComboBox.SelectedIndex, (obj as Item).ItemID, (obj as Item).StackSize);
+                LoadDataForBankList(true);
+                BankListBox.Invalidate();
             }
             if( eventName == "ApprovePending")
             {
@@ -184,6 +196,10 @@ namespace OGRE
             {
                 LoadDataForBankList(true);
                 BankListBox.Invalidate();
+            }
+            if( eventName == "DeleteFromEvent")
+            {
+                RemoveItemFromEvent((obj as Item).Name);
             }
         }
 
@@ -224,13 +240,7 @@ namespace OGRE
             int row = 0;
             foreach (Item item in DisplayedBankItems)
             {
-                RowStyle style = new RowStyle(SizeType.Percent);
-                style.Height = 10;
-                CellForItemList cell = new CellForItemList(item);
-
-
                 BankListBox.Invoke(new MethodInvoker(delegate {
-                    //BankListBox.RowStyles.Add(style);
                     BankListBox.Items.Add(item.StackSize + "\t::\t" + item.Name);
                 }));
 
@@ -487,6 +497,11 @@ namespace OGRE
                 MessageBox.Show("There was an issue, Try again later.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            if ( retsz.Content.ToString() == "Deleted" )
+            {
+                RemoveItemFromEvent(m_Bank.BankTabs[tab].ItemsDictionary[id].Name);
+            }
         }
 
         private void FolderDialButton_Click(object sender, EventArgs e)
@@ -593,5 +608,22 @@ namespace OGRE
 
             LoadUserForEvent();
         }
+
+        private void BankListBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            Brush myBrush = Brushes.Black;
+            if (DisplayedBankItems[e.Index].Pending == true)
+            {
+                myBrush = Brushes.OrangeRed;
+            }
+            var stringFormat = new StringFormat();
+            stringFormat.SetTabStops(0, new float[] { Font.SizeInPoints / 2 * e.Graphics.DpiX / 72 * 8 });
+
+            string sz = DisplayedBankItems[e.Index].StackSize.ToString() + "\t::\t" + DisplayedBankItems[e.Index].Name;
+            e.Graphics.DrawString(sz, e.Font, myBrush, e.Bounds, stringFormat);
+            e.DrawFocusRectangle();
+        }
+
     }
 }
