@@ -31,14 +31,11 @@ namespace OGRE
         public User user;
         public Bank m_Bank;
         public Event m_Event;
-<<<<<<< HEAD
         private Timer m_PendingPollTimer;
-=======
         public System.Timers.Timer m_PollPendingTimer;
         public int m_SelectedBankTab = 0;
         public List<Item> DisplayedBankItems;
         XmlDocument m_PendingXMLDoc;
->>>>>>> 03c737d5ffdb4cbb2b4264d810d3500f6f623368
 
         public MainPage()
         {
@@ -120,7 +117,7 @@ namespace OGRE
             }));
 
             if ( UpdateTable ) { LoadDataForBankTable(); }
-            
+
         }
 
         async public void LoadDataForItem(int id)
@@ -165,13 +162,6 @@ namespace OGRE
                     NewTabNameTextBox.Visible = true;
                     AddonPathTextBox.Visible = true;
                     FolderDialButton.Visible = true;
-<<<<<<< HEAD
-
-        		    m_PendingPollTimer = new Timer(300000); // 1 sec = 1000, 60 sec = 60000
-		            t.AutoReset = true;
-		            t.Elapsed += new System.Timers.ElapsedEventHandler(LoadDataForBankTable);
-		            t.Start();
-=======
                     BankItemManage.Visible = true;
                     ManagementToolsBox.Visible = true;
 
@@ -181,7 +171,6 @@ namespace OGRE
                     m_PollPendingTimer.AutoReset = true;
                     m_PollPendingTimer.Elapsed += new System.Timers.ElapsedEventHandler(UpdateDataForBankTable);
                     m_PollPendingTimer.Start();
->>>>>>> 03c737d5ffdb4cbb2b4264d810d3500f6f623368
                 }
             }
             if( eventName == "BankItemSelected")
@@ -309,7 +298,7 @@ namespace OGRE
             FileStream fs = new FileStream(AddonPathTextBox.Text + "\\ParsedSubmissionsToGuildBank.xml", FileMode.Open, FileAccess.ReadWrite);
             OpenPendingXMLDoc(fs);
             XmlNodeList xmlnode;
-                       
+
             xmlnode = m_PendingXMLDoc.GetElementsByTagName("Submission");
             int i = 0;
             for (; i <= xmlnode.Count - 1; i++)
@@ -318,7 +307,7 @@ namespace OGRE
                 int itemID = Convert.ToInt32(xmlnode[i].ChildNodes.Item(2).InnerText.Trim());
                 int stackSize = Convert.ToInt32(xmlnode[i].ChildNodes.Item(3).InnerText.Trim());
                 string itemName = xmlnode[i].ChildNodes.Item(5).InnerText.Trim();
-                
+
                 if( submitter == item.Sender &&
                     itemID == item.ItemID &&
                     stackSize == item.StackSize &&
