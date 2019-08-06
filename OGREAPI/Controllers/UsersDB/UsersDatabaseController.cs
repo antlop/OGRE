@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,9 +37,13 @@ namespace OGREAPI.Controllers
         }
 
         // POST api/User
-        [HttpGet("Create/{username}/{password}")]
-        public ActionResult<string> Get(string username, string password)
+        [HttpGet("Create/{username}/{password}/{bankkey}")]
+        public ActionResult<string> Get(string username, string password, string bankkey)
         {
+            if( bankkey != BankDatabase.Instance.bankKey ) {
+                return "Incorrect Key";
+            }
+
             //Item item = new Item(Convert.ToInt32(value["ID"]), value["Name"]);
             User user = new User(username, password, BankDatabase.Instance.GetBankVersionNumber(), 0);
             if( UserDatabase.Instance.DatabaseContainsKey(user.Name) )

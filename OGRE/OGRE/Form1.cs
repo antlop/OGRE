@@ -16,6 +16,7 @@ using OGRE.Events;
 using OGREAPI.Controllers;
 using Newtonsoft.Json;
 using System.IO;
+using System.Timers;
 
 // retreave item info
 // https://www.wowhead.com/item=00018604&xml
@@ -30,6 +31,7 @@ namespace OGRE
         public User user;
         public Bank m_Bank;
         public Event m_Event;
+        private Timer m_PendingPollTimer;
 
         public MainPage()
         {
@@ -55,6 +57,7 @@ namespace OGRE
             FolderDialButton.Visible = false;
 
             AddonPathTextBox.Text = "C:\\Program Files (x86)\\World of Warcraft\\_classic_\\Interface\\AddOns\\OGRE";
+
         }
 
         async public void LoadDataForBankList()
@@ -127,6 +130,11 @@ namespace OGRE
                     NewTabNameTextBox.Visible = true;
                     AddonPathTextBox.Visible = true;
                     FolderDialButton.Visible = true;
+
+        		    m_PendingPollTimer = new Timer(300000); // 1 sec = 1000, 60 sec = 60000
+		            t.AutoReset = true;
+		            t.Elapsed += new System.Timers.ElapsedEventHandler(LoadDataForBankTable);
+		            t.Start();
                 }
             }
             if( eventName == "BankItemSelected")

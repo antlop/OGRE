@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,11 +11,12 @@ namespace OGREAPI.Controllers
         public List<Grouping> BankTabs;
         public int VersionNumber;
         public int WrapVersionNumber = 1024;
+        public string BankKey = "Default";
 
         public Bank()
         {
             BankTabs = new List<Grouping>();
-            
+
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -87,6 +87,68 @@ namespace OGRE
                 MessageBox.Show(retArray[0], "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+
+        private void LoadBinaryUserData() {
+
+            try
+            {
+                string path = "C:\\Program Files (x86)\\World of Warcraft\\_classic_\\Interface\\AddOns\\OGRE";
+
+                bool exists = System.IO.Directory.Exists(path);
+
+                if(!exists) {
+                    return;
+                }
+
+                FileStream fs = File.Create(path + "\\pfile.dat", 2048, FileOptions.None);
+                BinaryReader br = new BinaryReader(fs);
+
+                string s = br.ReadLine().ToString();
+
+                ASCIIEncoding asen = new ASCIIEncoding();
+                byte[] ba = asen.GetBytes(s);
+
+                bw.Close();
+                fs.Close();
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+                Console.ReadKey(true);
+            }
+        }
+
+        private void SaveBinaryUserData() {
+
+            try
+            {
+                string path = "C:\\Program Files (x86)\\World of Warcraft\\_classic_\\Interface\\AddOns\\OGRE";
+
+                bool exists = System.IO.Directory.Exists(path);
+
+                if(!exists) {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+
+                FileStream fs = File.Create(path + "\\pfile.dat", 2048, FileOptions.None);
+                BinaryWriter bw = new BinaryWriter(fs);
+
+                string s = User.Instance.Name + ";" + User.Instance.Password;
+
+                ASCIIEncoding asen = new ASCIIEncoding();
+                byte[] ba = asen.GetBytes(s);
+
+                bw.Write(ba);
+
+                bw.Close();
+                fs.Close();
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+                Console.ReadKey(true);
+            }
         }
     }
 }
