@@ -99,5 +99,25 @@ namespace OGREAPI.Controllers
             }
             return "Failure: JSON error";
         }
+
+        [HttpDelete("RemoveItem/{itemname}")]
+        public ActionResult<string> RemoveItem(string itemname)
+        {
+            EventDatabase.Instance.RemoveItem(itemname);
+            return "SUCCESS";
+        }
+
+        [HttpDelete("RemoveSubmission/{subname}/{count}")]
+        public ActionResult<string> RemoveSubmission(string subname, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if (!EventDatabase.Instance.RemoveSubmission(subname))
+                {
+                    break;
+                }
+            }
+            return "SUCCESS";
+        }
     }
 }

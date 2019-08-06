@@ -69,11 +69,21 @@ namespace OGREAPI.Controllers
             BankDatabase.Instance.BankKey = bankkey;
         }
 
+        [HttpPut("AddItem")]
+        public void PutNewItem([FromBody] Item item)
+        {
+            BankDatabase.Instance.AddItemToBankTab(item, 0);
+        }
+
         // DELETE api/values/1/103/1
         [HttpDelete("{tab}/{id}/{count}")]
-        public void Delete(int tab, int id, int count)
+        public ActionResult<string> Delete(int tab, int id, int count)
         {
-            BankDatabase.Instance.RemoveItem(id, tab, count);
+            if( BankDatabase.Instance.RemoveItem(id, tab, count) )
+            {
+                return "Still Available";
+            }
+            return "Deleted";
         }
     }
 }

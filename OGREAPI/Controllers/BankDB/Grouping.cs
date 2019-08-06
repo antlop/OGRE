@@ -36,18 +36,21 @@ namespace OGREAPI.Controllers
             }
         }
 
-        public void RemoveItem(int itemID, int count)
+        public bool RemoveItem(int itemID, int count)
         {
             if (ItemsDictionary != null && ItemsDictionary.ContainsKey(itemID))
             {
                 if( ItemsDictionary[itemID].StackSize > count )
                 {
                     ItemsDictionary[itemID].StackSize -= count;
+                    return true;
                 } else
                 {
                     ItemsDictionary.Remove(itemID);
+                    return false;
                 }
             }
+            return true;
         }
 
         public bool DoesHaveViewPermission(MemberRanks rank)

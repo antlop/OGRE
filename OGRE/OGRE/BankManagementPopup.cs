@@ -32,6 +32,10 @@ namespace OGRE
             if (!workingItem.Pending)
             {
                 ApproveButton.Enabled = false;
+            } else
+            {
+                AddItemToEventButton.Enabled = false;
+                RemoveItemButton.Enabled = false;
             }
 
             LoadDataForItem();
@@ -41,7 +45,8 @@ namespace OGRE
 
         private void ApproveButton_Click(object sender, EventArgs e)
         {
-
+            EventSystem.Instance.TriggerEvent("ApprovePending", workingItem);
+            this.Close();
         }
 
         private void AddItemToEventButton_Click(object sender, EventArgs e)
@@ -52,7 +57,15 @@ namespace OGRE
 
         private void RemoveItemButton_Click(object sender, EventArgs e)
         {
-            EventSystem.Instance.TriggerEvent("DeleteFromBank", workingItem);
+            Item item = new Item(workingItem, (int)StackCountNumericUpDown.Value);
+            EventSystem.Instance.TriggerEvent("DeleteFromBank", item);
+
+            if( (int)StackCountNumericUpDown.Value >= workingItem.StackSize)
+            {
+                EventSystem.Instance.TriggerEvent("DeleteFromEvent", item);
+            }
+
+            this.Close();
         }
 
 
@@ -71,12 +84,17 @@ namespace OGRE
                 return;
             }
 
+            try
+            {
+                var xDoc = XDocument.Parse(retsz);
+                //var icon = xDoc.Descendants("icon").Single();
+                //Uri uri = new Uri(string.Format("https://wow.zamimg.com/images/wow/icons/large/{0}.jpg", icon.Value));
+                //this.Icon = new Icon(new System.IO.Stream());
+                this.Text = xDoc.Descendants("name").Single().Value;
+            }
+            catch { }
 
-            var xDoc = XDocument.Parse(retsz);
-            //var icon = xDoc.Descendants("icon").Single();
-            //Uri uri = new Uri(string.Format("https://wow.zamimg.com/images/wow/icons/large/{0}.jpg", icon.Value));
-            //this.Icon = new Icon(new System.IO.Stream());
-            this.Text = xDoc.Descendants("name").Single().Value;
+            StackCountNumericUpDown.Value = workingItem.StackSize;
         }
 
         async public void AddItemToEvent()
@@ -93,6 +111,15 @@ namespace OGRE
             {
                 MessageBox.Show("There was an issue, Try again later.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+            }
+
+            EventSystem.Instance.TriggerEvent<Item>("RefreshBankList", null);
+        }
+        private void Form_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
             }
         }
     }

@@ -24,9 +24,14 @@ namespace OGRE
             Dock = DockStyle.Fill;
             BackColor = Color.SlateGray;
 
+            if(baseItem == null)
+            {
+                return;
+            }
+
             Label label = new Label();
-            label.Text = baseItem.Name;
-            label.Dock = DockStyle.Left;
+            label.Text = baseItem.Name + "        x" + baseItem.StackSize.ToString();
+            label.Dock = DockStyle.Fill;
             label.Click += delegate (object sender2, EventArgs e2)
             { BankItemSelect(sender2, e2, baseItem); };
             this.Controls.Add(label);
@@ -40,6 +45,11 @@ namespace OGRE
                 mngbtn.Click += delegate (object sender3, EventArgs e3)
                 { BankManagementPopupClicked(sender3, e3, baseItem); };
                 this.Controls.Add(mngbtn);
+
+                if (baseItem.Pending)
+                {
+                    BackColor = Color.Yellow;
+                }
             }
         }
         protected void BankItemSelect(object sender, EventArgs e, Item item)
