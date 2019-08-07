@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -26,6 +26,8 @@ namespace OGRE
             this.BringToFront();
             //load in preferences from save file
             //   if keep me logged in is On then fill username/password and Login(User.Instance.Username, User.Instance.Password, User.Instance.Version);
+
+            LoadBinaryUserData();
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -76,10 +78,8 @@ namespace OGRE
                         break;
                 }
 
-                if( LoggedInCheckBox.Checked )
-                {
-                    // save info to save file
-                }
+                // save info to save file
+                SaveBinaryUserData();
 
                 EventSystem.Instance.TriggerEvent<Form>("LoginEvent", null);
                 this.Close();
@@ -92,9 +92,11 @@ namespace OGRE
 
         private void LoadBinaryUserData() {
 
+            FileStream fs = null;
+            BinaryReader br = null;
             try
             {
-                string path = "C:\\Program Files (x86)\\World of Warcraft\\_classic_\\Interface\\AddOns\\OGRE";
+                string path = "C:\\OGRE";
 
                 bool exists = System.IO.Directory.Exists(path);
 
@@ -102,29 +104,39 @@ namespace OGRE
                     return;
                 }
 
-                FileStream fs = File.Create(path + "\\pfile.dat", 2048, FileOptions.None);
-                BinaryReader br = new BinaryReader(fs);
+                fs = File.Open(path + "\\pfile.dat", FileMode.Open);
+                br = new BinaryReader(fs);
 
-                string s = br.ReadLine().ToString();
+                byte[] ba = br.ReadBytes(1024);
 
                 ASCIIEncoding asen = new ASCIIEncoding();
-                byte[] ba = asen.GetBytes(s);
+                string[] data = asen.GetString(ba).Split(';');
+                if (data.Length > 1)
+                {
+                    UsernameTextBox.Text = data[0];
+                    PasswordTextBox.Text = data[1];
 
-                bw.Close();
-                fs.Close();
+                    LoggedInCheckBox.Checked = true;
+                }
             }
             catch (Exception e)
             {
                 Console.Write(e.Message);
-                Console.ReadKey(true);
             }
+
+            if (br != null)
+                br.Close();
+            if (fs != null)
+                fs.Close();
         }
 
         private void SaveBinaryUserData() {
 
+            FileStream fs = null;
+            BinaryWriter bw = null;
             try
             {
-                string path = "C:\\Program Files (x86)\\World of Warcraft\\_classic_\\Interface\\AddOns\\OGRE";
+                string path = "C:\\OGRE";
 
                 bool exists = System.IO.Directory.Exists(path);
 
@@ -132,24 +144,37 @@ namespace OGRE
                     System.IO.Directory.CreateDirectory(path);
                 }
 
-                FileStream fs = File.Create(path + "\\pfile.dat", 2048, FileOptions.None);
-                BinaryWriter bw = new BinaryWriter(fs);
+                path += "\\pfile.dat";
+                if (File.Exists(path))
+                {
+                    fs = File.Open(path, FileMode.Truncate);
+                } else {
+                    fs = File.Create(path + "\\pfile.dat", 2048, FileOptions.None);
+                }
+                bw = new BinaryWriter(fs);
 
-                string s = User.Instance.Name + ";" + User.Instance.Password;
+                string s = "";
+
+                if (LoggedInCheckBox.Checked)
+                {
+                    s = User.Instance.Username + ";" + User.Instance.Password;
+                }
 
                 ASCIIEncoding asen = new ASCIIEncoding();
                 byte[] ba = asen.GetBytes(s);
 
                 bw.Write(ba);
 
-                bw.Close();
-                fs.Close();
             }
             catch (Exception e)
             {
                 Console.Write(e.Message);
-                Console.ReadKey(true);
             }
+
+            if(bw != null)
+                bw.Close();
+            if(fs != null)
+                fs.Close();
         }
     }
 }

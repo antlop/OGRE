@@ -55,7 +55,6 @@
             // LoggedInCheckBox
             // 
             this.LoggedInCheckBox.AutoSize = true;
-            this.LoggedInCheckBox.Enabled = false;
             this.LoggedInCheckBox.Location = new System.Drawing.Point(169, 197);
             this.LoggedInCheckBox.Name = "LoggedInCheckBox";
             this.LoggedInCheckBox.Size = new System.Drawing.Size(134, 19);
@@ -90,7 +89,6 @@
             this.PasswordTextBox.Name = "PasswordTextBox";
             this.PasswordTextBox.Size = new System.Drawing.Size(291, 20);
             this.PasswordTextBox.TabIndex = 2;
-            this.PasswordTextBox.Text = "Oatney";
             this.PasswordTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // UsernameTextBox
@@ -100,7 +98,6 @@
             this.UsernameTextBox.Name = "UsernameTextBox";
             this.UsernameTextBox.Size = new System.Drawing.Size(291, 20);
             this.UsernameTextBox.TabIndex = 1;
-            this.UsernameTextBox.Text = "Devan";
             this.UsernameTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // button1

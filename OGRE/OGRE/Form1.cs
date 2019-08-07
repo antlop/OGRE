@@ -31,7 +31,6 @@ namespace OGRE
         public User user;
         public Bank m_Bank;
         public Event m_Event;
-        private Timer m_PendingPollTimer;
         public System.Timers.Timer m_PollPendingTimer;
         public int m_SelectedBankTab = 0;
         public List<Item> DisplayedBankItems;

@@ -40,6 +40,7 @@ namespace OGREAPI.Controllers
         */
 
         public Bank m_Bank;
+        public string BankKey;
 
         public void AddItemToBankTab(Item item, int TabIndex)
         {
