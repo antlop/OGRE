@@ -49,6 +49,7 @@ namespace OGRE
             EventSystem.Instance.RegisterListenerForEvent("DeleteFromEvent", this);
             EventSystem.Instance.RegisterListenerForEvent("ApprovePending", this);
             EventSystem.Instance.RegisterListenerForEvent("RefreshBankList", this);
+            EventSystem.Instance.RegisterListenerForEvent("RefreshEventData", this);
 
             //m_Explorer = new WowExplorer(WowDotNetAPI.Region.US, Locale.en_US, "732aa68878154a04964e12aed8fddfad");
 
@@ -61,6 +62,10 @@ namespace OGRE
             FolderDialButton.Visible = false;
             BankItemManage.Visible = false;
             ManagementToolsBox.Visible = false;
+            BankKeyLabel.Visible = false;
+            BankKeyTextBox.Visible = false;
+            ChangeBankKeyButton.Visible = false;
+            AddonPathLabel.Visible = false;
 
             AddonPathTextBox.Text = "C:\\Program Files (x86)\\World of Warcraft\\_classic_\\Interface\\AddOns\\OGRE";
 
@@ -94,7 +99,7 @@ namespace OGRE
 
             int count = m_Bank.BankTabs.Count;
             TabComboBox.Invoke(new MethodInvoker(delegate {
-                TabComboBox.Controls.Clear();
+                TabComboBox.Items.Clear();
             }));
             for (int index = 0; index < count; index++)
             {
@@ -163,6 +168,10 @@ namespace OGRE
                     FolderDialButton.Visible = true;
                     BankItemManage.Visible = true;
                     ManagementToolsBox.Visible = true;
+                    BankKeyLabel.Visible = true;
+                    BankKeyTextBox.Visible = true;
+                    ChangeBankKeyButton.Visible = true;
+                    AddonPathLabel.Visible = true;
 
                     EventItemsList.SelectionMode = SelectionMode.One;
 
@@ -170,6 +179,8 @@ namespace OGRE
                     m_PollPendingTimer.AutoReset = true;
                     m_PollPendingTimer.Elapsed += new System.Timers.ElapsedEventHandler(UpdateDataForBankTable);
                     m_PollPendingTimer.Start();
+
+                    GetBankKey();
                 }
             }
             if( eventName == "BankItemSelected")
@@ -201,6 +212,10 @@ namespace OGRE
             if( eventName == "DeleteFromEvent")
             {
                 RemoveItemFromEvent((obj as Item).Name);
+            }
+            if( eventName == "RefreshEventData")
+            {
+                LoadUserForEvent();
             }
         }
 
@@ -370,6 +385,7 @@ namespace OGRE
 
                 row++;
             }
+
         }
 
         async public void LoadUserForEvent()
@@ -403,7 +419,7 @@ namespace OGRE
             CurrentEventEntries.Text = "Number of Tickets in Current Event: " + entries.ToString();
             BankedTicketsLabel.Text = User.Instance.Username + ", you have " + User.Instance.EntryTokens.ToString() + " tickets to spend.";
 
-
+            EventSystem.Instance.TriggerEvent<Dictionary<String, int>>("RefreshEventList", m_Event.Submissions);
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -533,7 +549,12 @@ namespace OGRE
 
         private void BankListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadDataForItem(DisplayedBankItems[BankListBox.SelectedIndex].ItemID);
+            int selectedIndex = 0;
+            if (BankListBox.SelectedIndex >= 0 && BankListBox.SelectedIndex < DisplayedBankItems.Count)
+            {
+                selectedIndex = BankListBox.SelectedIndex;
+            }
+            LoadDataForItem(DisplayedBankItems[selectedIndex].ItemID);
         }
 
         private void BankItemManage_Click(object sender, EventArgs e)
@@ -553,6 +574,12 @@ namespace OGRE
 
         private void EventWinnerButton_Click(object sender, EventArgs e)
         {
+            if (m_Event.Submissions.Count <= 0)
+            {
+                EventWinnerLabel.Text = "!! NO SUBMISSION !!";
+                return;
+            }
+
             List<String> submissions = new List<string>();
             foreach(string submission in m_Event.Submissions.Keys)
             {
@@ -626,5 +653,59 @@ namespace OGRE
             e.DrawFocusRectangle();
         }
 
+        private void ChangeBankKeyButton_Click(object sender, EventArgs e)
+        {
+            ModifyBankKey(BankKeyTextBox.Text);
+        }
+
+        async private void ModifyBankKey(string newKey)
+        {
+            HttpClient client = new HttpClient();
+            string path = "https://localhost:44320//api";
+            path += "//Bank//Key//" + newKey;
+            HttpResponseMessage retsz;
+            try
+            {
+                retsz = await client.GetAsync(path);
+            }
+            catch
+            {
+                MessageBox.Show("There was an issue, Try again later.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            BankKeyLabel.Text = newKey;
+        }
+        async private void GetBankKey()
+        {
+            HttpClient client = new HttpClient();
+            string path = "https://localhost:44320//api";
+            path += "//Bank//Key";
+            string retsz;
+            try
+            {
+                retsz = await client.GetStringAsync(path);
+            }
+            catch
+            {
+                MessageBox.Show("There was an issue, Try again later.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if( retsz != "NoKey")
+            {
+                BankKeyLabel.Text = "Bank Key: " + retsz;
+            } else
+            {
+                BankKeyLabel.Text = "Bank Key: ";
+            }
+        }
+
+        private void ManageSubmissionsButton_Click(object sender, EventArgs e)
+        {
+            SubmissionsManagement page = new SubmissionsManagement();
+            page.InitializeMe(m_Event);
+            page.Show(this);
+        }
     }
 }

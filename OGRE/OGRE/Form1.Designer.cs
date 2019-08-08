@@ -31,7 +31,7 @@
             this.MainTabControl = new System.Windows.Forms.TabControl();
             this.BankTab = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.label3 = new System.Windows.Forms.Label();
+            this.AddonPathLabel = new System.Windows.Forms.Label();
             this.FolderDialButton = new System.Windows.Forms.Button();
             this.AddonPathTextBox = new System.Windows.Forms.TextBox();
             this.NewTabNameTextBox = new System.Windows.Forms.TextBox();
@@ -45,6 +45,12 @@
             this.BankListBox = new System.Windows.Forms.ListBox();
             this.EventTab = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.ManagementToolsBox = new System.Windows.Forms.GroupBox();
+            this.ManageSubmissionsButton = new System.Windows.Forms.Button();
+            this.EventWinnerLabel = new System.Windows.Forms.Label();
+            this.RemoveEventItemButton = new System.Windows.Forms.Button();
+            this.EventWinnerButton = new System.Windows.Forms.Button();
+            this.SelectedItemLabel = new System.Windows.Forms.Label();
             this.CurrentEventEntries = new System.Windows.Forms.Label();
             this.BankedTicketsLabel = new System.Windows.Forms.Label();
             this.eventTokenSubmissionCount = new System.Windows.Forms.NumericUpDown();
@@ -52,12 +58,9 @@
             this.button1 = new System.Windows.Forms.Button();
             this.EventItemsList = new System.Windows.Forms.ListBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.ManagementToolsBox = new System.Windows.Forms.GroupBox();
-            this.SelectedItemLabel = new System.Windows.Forms.Label();
-            this.EventWinnerButton = new System.Windows.Forms.Button();
-            this.RemoveEventItemButton = new System.Windows.Forms.Button();
-            this.EventWinnerLabel = new System.Windows.Forms.Label();
-            this.ManageSubmissionsButton = new System.Windows.Forms.Button();
+            this.BankKeyLabel = new System.Windows.Forms.Label();
+            this.ChangeBankKeyButton = new System.Windows.Forms.Button();
+            this.BankKeyTextBox = new System.Windows.Forms.TextBox();
             this.MainTabControl.SuspendLayout();
             this.BankTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -71,8 +74,8 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.eventTokenSubmissionCount)).BeginInit();
             this.ManagementToolsBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eventTokenSubmissionCount)).BeginInit();
             this.SuspendLayout();
             // 
             // MainTabControl
@@ -111,7 +114,10 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.label3);
+            this.splitContainer1.Panel1.Controls.Add(this.BankKeyLabel);
+            this.splitContainer1.Panel1.Controls.Add(this.ChangeBankKeyButton);
+            this.splitContainer1.Panel1.Controls.Add(this.BankKeyTextBox);
+            this.splitContainer1.Panel1.Controls.Add(this.AddonPathLabel);
             this.splitContainer1.Panel1.Controls.Add(this.FolderDialButton);
             this.splitContainer1.Panel1.Controls.Add(this.AddonPathTextBox);
             this.splitContainer1.Panel1.Controls.Add(this.NewTabNameTextBox);
@@ -128,14 +134,14 @@
             this.splitContainer1.SplitterDistance = 262;
             this.splitContainer1.TabIndex = 0;
             // 
-            // label3
+            // AddonPathLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 96);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(73, 15);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Addon Path:";
+            this.AddonPathLabel.AutoSize = true;
+            this.AddonPathLabel.Location = new System.Drawing.Point(4, 96);
+            this.AddonPathLabel.Name = "AddonPathLabel";
+            this.AddonPathLabel.Size = new System.Drawing.Size(73, 15);
+            this.AddonPathLabel.TabIndex = 8;
+            this.AddonPathLabel.Text = "Addon Path:";
             // 
             // FolderDialButton
             // 
@@ -278,6 +284,71 @@
             this.splitContainer2.SplitterDistance = 364;
             this.splitContainer2.TabIndex = 0;
             // 
+            // ManagementToolsBox
+            // 
+            this.ManagementToolsBox.Controls.Add(this.ManageSubmissionsButton);
+            this.ManagementToolsBox.Controls.Add(this.EventWinnerLabel);
+            this.ManagementToolsBox.Controls.Add(this.RemoveEventItemButton);
+            this.ManagementToolsBox.Controls.Add(this.EventWinnerButton);
+            this.ManagementToolsBox.Controls.Add(this.SelectedItemLabel);
+            this.ManagementToolsBox.Location = new System.Drawing.Point(30, 183);
+            this.ManagementToolsBox.Name = "ManagementToolsBox";
+            this.ManagementToolsBox.Size = new System.Drawing.Size(301, 230);
+            this.ManagementToolsBox.TabIndex = 5;
+            this.ManagementToolsBox.TabStop = false;
+            this.ManagementToolsBox.Text = "Management Tools";
+            // 
+            // ManageSubmissionsButton
+            // 
+            this.ManageSubmissionsButton.Location = new System.Drawing.Point(6, 201);
+            this.ManageSubmissionsButton.Name = "ManageSubmissionsButton";
+            this.ManageSubmissionsButton.Size = new System.Drawing.Size(289, 23);
+            this.ManageSubmissionsButton.TabIndex = 9;
+            this.ManageSubmissionsButton.Text = "Manage Submissions";
+            this.ManageSubmissionsButton.UseVisualStyleBackColor = true;
+            this.ManageSubmissionsButton.Click += new System.EventHandler(this.ManageSubmissionsButton_Click);
+            // 
+            // EventWinnerLabel
+            // 
+            this.EventWinnerLabel.AutoSize = true;
+            this.EventWinnerLabel.Location = new System.Drawing.Point(187, 48);
+            this.EventWinnerLabel.Name = "EventWinnerLabel";
+            this.EventWinnerLabel.Size = new System.Drawing.Size(70, 15);
+            this.EventWinnerLabel.TabIndex = 8;
+            this.EventWinnerLabel.Text = "...pending...";
+            // 
+            // RemoveEventItemButton
+            // 
+            this.RemoveEventItemButton.Location = new System.Drawing.Point(6, 111);
+            this.RemoveEventItemButton.Name = "RemoveEventItemButton";
+            this.RemoveEventItemButton.Size = new System.Drawing.Size(175, 23);
+            this.RemoveEventItemButton.TabIndex = 7;
+            this.RemoveEventItemButton.Text = "Remove Item From Event";
+            this.RemoveEventItemButton.UseVisualStyleBackColor = true;
+            this.RemoveEventItemButton.Click += new System.EventHandler(this.RemoveEventItemButton_Click);
+            // 
+            // EventWinnerButton
+            // 
+            this.EventWinnerButton.Location = new System.Drawing.Point(6, 43);
+            this.EventWinnerButton.Name = "EventWinnerButton";
+            this.EventWinnerButton.Size = new System.Drawing.Size(175, 23);
+            this.EventWinnerButton.TabIndex = 6;
+            this.EventWinnerButton.Text = "Roll For Winner";
+            this.EventWinnerButton.UseVisualStyleBackColor = true;
+            this.EventWinnerButton.Click += new System.EventHandler(this.EventWinnerButton_Click);
+            // 
+            // SelectedItemLabel
+            // 
+            this.SelectedItemLabel.AutoEllipsis = true;
+            this.SelectedItemLabel.AutoSize = true;
+            this.SelectedItemLabel.Location = new System.Drawing.Point(6, 93);
+            this.SelectedItemLabel.Name = "SelectedItemLabel";
+            this.SelectedItemLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.SelectedItemLabel.Size = new System.Drawing.Size(41, 15);
+            this.SelectedItemLabel.TabIndex = 0;
+            this.SelectedItemLabel.Text = "label2";
+            this.SelectedItemLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // CurrentEventEntries
             // 
             this.CurrentEventEntries.AutoSize = true;
@@ -350,69 +421,31 @@
             this.EventItemsList.TabIndex = 0;
             this.EventItemsList.SelectedIndexChanged += new System.EventHandler(this.EventItemsList_SelectedIndexChanged);
             // 
-            // ManagementToolsBox
+            // BankKeyLabel
             // 
-            this.ManagementToolsBox.Controls.Add(this.ManageSubmissionsButton);
-            this.ManagementToolsBox.Controls.Add(this.EventWinnerLabel);
-            this.ManagementToolsBox.Controls.Add(this.RemoveEventItemButton);
-            this.ManagementToolsBox.Controls.Add(this.EventWinnerButton);
-            this.ManagementToolsBox.Controls.Add(this.SelectedItemLabel);
-            this.ManagementToolsBox.Location = new System.Drawing.Point(30, 183);
-            this.ManagementToolsBox.Name = "ManagementToolsBox";
-            this.ManagementToolsBox.Size = new System.Drawing.Size(301, 230);
-            this.ManagementToolsBox.TabIndex = 5;
-            this.ManagementToolsBox.TabStop = false;
-            this.ManagementToolsBox.Text = "Management Tools";
+            this.BankKeyLabel.AutoSize = true;
+            this.BankKeyLabel.Location = new System.Drawing.Point(4, 133);
+            this.BankKeyLabel.Name = "BankKeyLabel";
+            this.BankKeyLabel.Size = new System.Drawing.Size(61, 15);
+            this.BankKeyLabel.TabIndex = 11;
+            this.BankKeyLabel.Text = "Bank Key:";
             // 
-            // SelectedItemLabel
+            // ChangeBankKeyButton
             // 
-            this.SelectedItemLabel.AutoEllipsis = true;
-            this.SelectedItemLabel.AutoSize = true;
-            this.SelectedItemLabel.Location = new System.Drawing.Point(6, 93);
-            this.SelectedItemLabel.Name = "SelectedItemLabel";
-            this.SelectedItemLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.SelectedItemLabel.Size = new System.Drawing.Size(41, 15);
-            this.SelectedItemLabel.TabIndex = 0;
-            this.SelectedItemLabel.Text = "label2";
-            this.SelectedItemLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ChangeBankKeyButton.Location = new System.Drawing.Point(168, 161);
+            this.ChangeBankKeyButton.Name = "ChangeBankKeyButton";
+            this.ChangeBankKeyButton.Size = new System.Drawing.Size(83, 23);
+            this.ChangeBankKeyButton.TabIndex = 10;
+            this.ChangeBankKeyButton.Text = "Change Key";
+            this.ChangeBankKeyButton.UseVisualStyleBackColor = true;
+            this.ChangeBankKeyButton.Click += new System.EventHandler(this.ChangeBankKeyButton_Click);
             // 
-            // EventWinnerButton
+            // BankKeyTextBox
             // 
-            this.EventWinnerButton.Location = new System.Drawing.Point(6, 43);
-            this.EventWinnerButton.Name = "EventWinnerButton";
-            this.EventWinnerButton.Size = new System.Drawing.Size(175, 23);
-            this.EventWinnerButton.TabIndex = 6;
-            this.EventWinnerButton.Text = "Roll For Winner";
-            this.EventWinnerButton.UseVisualStyleBackColor = true;
-            this.EventWinnerButton.Click += new System.EventHandler(this.EventWinnerButton_Click);
-            // 
-            // RemoveEventItemButton
-            // 
-            this.RemoveEventItemButton.Location = new System.Drawing.Point(6, 111);
-            this.RemoveEventItemButton.Name = "RemoveEventItemButton";
-            this.RemoveEventItemButton.Size = new System.Drawing.Size(175, 23);
-            this.RemoveEventItemButton.TabIndex = 7;
-            this.RemoveEventItemButton.Text = "Remove Item From Event";
-            this.RemoveEventItemButton.UseVisualStyleBackColor = true;
-            this.RemoveEventItemButton.Click += new System.EventHandler(this.RemoveEventItemButton_Click);
-            // 
-            // EventWinnerLabel
-            // 
-            this.EventWinnerLabel.AutoSize = true;
-            this.EventWinnerLabel.Location = new System.Drawing.Point(187, 48);
-            this.EventWinnerLabel.Name = "EventWinnerLabel";
-            this.EventWinnerLabel.Size = new System.Drawing.Size(70, 15);
-            this.EventWinnerLabel.TabIndex = 8;
-            this.EventWinnerLabel.Text = "...pending...";
-            // 
-            // ManageSubmissionsButton
-            // 
-            this.ManageSubmissionsButton.Location = new System.Drawing.Point(6, 201);
-            this.ManageSubmissionsButton.Name = "ManageSubmissionsButton";
-            this.ManageSubmissionsButton.Size = new System.Drawing.Size(289, 23);
-            this.ManageSubmissionsButton.TabIndex = 9;
-            this.ManageSubmissionsButton.Text = "Manage Submissions";
-            this.ManageSubmissionsButton.UseVisualStyleBackColor = true;
+            this.BankKeyTextBox.Location = new System.Drawing.Point(4, 163);
+            this.BankKeyTextBox.Name = "BankKeyTextBox";
+            this.BankKeyTextBox.Size = new System.Drawing.Size(158, 20);
+            this.BankKeyTextBox.TabIndex = 9;
             // 
             // MainPage
             // 
@@ -441,9 +474,9 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.eventTokenSubmissionCount)).EndInit();
             this.ManagementToolsBox.ResumeLayout(false);
             this.ManagementToolsBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eventTokenSubmissionCount)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -467,7 +500,7 @@
         private System.Windows.Forms.TextBox NewTabNameTextBox;
         private System.Windows.Forms.Button AddBankTabButton;
         private System.Windows.Forms.Button ManageBankTabButton;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label AddonPathLabel;
         private System.Windows.Forms.Button FolderDialButton;
         private System.Windows.Forms.TextBox AddonPathTextBox;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
@@ -480,6 +513,9 @@
         private System.Windows.Forms.Button RemoveEventItemButton;
         private System.Windows.Forms.Button EventWinnerButton;
         private System.Windows.Forms.Label SelectedItemLabel;
+        private System.Windows.Forms.Label BankKeyLabel;
+        private System.Windows.Forms.Button ChangeBankKeyButton;
+        private System.Windows.Forms.TextBox BankKeyTextBox;
     }
 }
 

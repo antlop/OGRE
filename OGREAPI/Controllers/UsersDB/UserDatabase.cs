@@ -13,11 +13,6 @@ namespace OGREAPI.Controllers
         private UserDatabase()
         {
             UsersDB = new Dictionary<string, User>();
-
-		    Random rand = new Random();
-            string name = "Anton+" + rand.Next(1, 99999).ToString();
-            User user = new User(name, "Lopez", 0, 0);
-            UsersDB.Add(user.Name, user);
         }
 
         public Dictionary<string, User> UsersDB;

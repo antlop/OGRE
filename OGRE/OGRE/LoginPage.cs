@@ -15,7 +15,7 @@ using OGRE.Events;
 
 namespace OGRE
 {
-    public partial class LoginPage : Form
+    public partial class LoginPage : Form, IListener
     {
         public HttpClient client;
         public LoginPage()
@@ -28,6 +28,7 @@ namespace OGRE
             //   if keep me logged in is On then fill username/password and Login(User.Instance.Username, User.Instance.Password, User.Instance.Version);
 
             LoadBinaryUserData();
+            EventSystem.Instance.RegisterListenerForEvent("AccountCreationSuccess", this);
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -54,7 +55,8 @@ namespace OGRE
             try
             {
                 retsz = await client.GetStringAsync(path);
-            } catch
+            }
+            catch
             {
                 MessageBox.Show("There was an issue, Try again later.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -83,14 +85,16 @@ namespace OGRE
 
                 EventSystem.Instance.TriggerEvent<Form>("LoginEvent", null);
                 this.Close();
-            } else
+            }
+            else
             {
                 MessageBox.Show(retArray[0], "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
 
-        private void LoadBinaryUserData() {
+        private void LoadBinaryUserData()
+        {
 
             FileStream fs = null;
             BinaryReader br = null;
@@ -100,7 +104,8 @@ namespace OGRE
 
                 bool exists = System.IO.Directory.Exists(path);
 
-                if(!exists) {
+                if (!exists)
+                {
                     return;
                 }
 
@@ -130,7 +135,8 @@ namespace OGRE
                 fs.Close();
         }
 
-        private void SaveBinaryUserData() {
+        private void SaveBinaryUserData()
+        {
 
             FileStream fs = null;
             BinaryWriter bw = null;
@@ -140,7 +146,8 @@ namespace OGRE
 
                 bool exists = System.IO.Directory.Exists(path);
 
-                if(!exists) {
+                if (!exists)
+                {
                     System.IO.Directory.CreateDirectory(path);
                 }
 
@@ -148,7 +155,9 @@ namespace OGRE
                 if (File.Exists(path))
                 {
                     fs = File.Open(path, FileMode.Truncate);
-                } else {
+                }
+                else
+                {
                     fs = File.Create(path + "\\pfile.dat", 2048, FileOptions.None);
                 }
                 bw = new BinaryWriter(fs);
@@ -171,10 +180,31 @@ namespace OGRE
                 Console.Write(e.Message);
             }
 
-            if(bw != null)
+            if (bw != null)
                 bw.Close();
-            if(fs != null)
+            if (fs != null)
                 fs.Close();
+        }
+
+        private void SignUpButton_Click(object sender, EventArgs e)
+        {
+            SignUpPage page = new SignUpPage();
+            page.Show(this);
+        }
+
+        public void HandleEvent<T>(string eventName, T obj)
+        {
+            if (eventName == "AccountCreationSuccess")
+            {
+                UsernameTextBox.Text = (obj as UserTemp).name;
+                PasswordTextBox.Text = (obj as UserTemp).password;
+
+                User.Instance.Username = UsernameTextBox.Text;
+                User.Instance.Password = PasswordTextBox.Text;
+                User.Instance.Version = 1;
+
+                Login(User.Instance.Username, User.Instance.Password, User.Instance.Version);
+            }
         }
     }
 }

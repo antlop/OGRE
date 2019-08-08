@@ -63,10 +63,20 @@ namespace OGREAPI.Controllers
             BankDatabase.Instance.AddItemToBankTab(item, 0);
         }
 
-        [HttpPut("Key/{bankkey}")]
+        [HttpGet("Key/{bankkey}")]
         public void Put(string bankkey)
         {
             BankDatabase.Instance.BankKey = bankkey;
+        }
+
+        [HttpGet("Key")]
+        public ActionResult<string> GetKey()
+        {
+            if( BankDatabase.Instance.BankKey != null)
+            {
+                return BankDatabase.Instance.BankKey;
+            }
+            return "NoKey";
         }
 
         [HttpPut("AddItem")]

@@ -1,6 +1,6 @@
 ﻿namespace OGRE
 {
-    partial class LoginPage
+    partial class SignUpPage
     {
         /// <summary>
         /// Required designer variable.
@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.LoginScreen = new System.Windows.Forms.Panel();
-            this.SignUpButton = new System.Windows.Forms.Button();
-            this.LoggedInCheckBox = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.BankKeyTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.PasswordTextBox = new System.Windows.Forms.TextBox();
@@ -41,8 +41,8 @@
             // 
             // LoginScreen
             // 
-            this.LoginScreen.Controls.Add(this.SignUpButton);
-            this.LoginScreen.Controls.Add(this.LoggedInCheckBox);
+            this.LoginScreen.Controls.Add(this.label3);
+            this.LoginScreen.Controls.Add(this.BankKeyTextBox);
             this.LoginScreen.Controls.Add(this.label2);
             this.LoginScreen.Controls.Add(this.label1);
             this.LoginScreen.Controls.Add(this.PasswordTextBox);
@@ -54,32 +54,30 @@
             this.LoginScreen.Size = new System.Drawing.Size(464, 223);
             this.LoginScreen.TabIndex = 2;
             // 
-            // SignUpButton
+            // label3
             // 
-            this.SignUpButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.SignUpButton.Location = new System.Drawing.Point(168, 159);
-            this.SignUpButton.Name = "SignUpButton";
-            this.SignUpButton.Size = new System.Drawing.Size(135, 27);
-            this.SignUpButton.TabIndex = 6;
-            this.SignUpButton.Text = "Sign Up";
-            this.SignUpButton.UseVisualStyleBackColor = true;
-            this.SignUpButton.Click += new System.EventHandler(this.SignUpButton_Click);
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(77, 134);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(118, 15);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Guild Bank Passkey:";
             // 
-            // LoggedInCheckBox
+            // BankKeyTextBox
             // 
-            this.LoggedInCheckBox.AutoSize = true;
-            this.LoggedInCheckBox.Location = new System.Drawing.Point(170, 192);
-            this.LoggedInCheckBox.Name = "LoggedInCheckBox";
-            this.LoggedInCheckBox.Size = new System.Drawing.Size(134, 19);
-            this.LoggedInCheckBox.TabIndex = 5;
-            this.LoggedInCheckBox.Text = "Keep me Logged in";
-            this.LoggedInCheckBox.UseVisualStyleBackColor = true;
+            this.BankKeyTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.BankKeyTextBox.Location = new System.Drawing.Point(77, 152);
+            this.BankKeyTextBox.Name = "BankKeyTextBox";
+            this.BankKeyTextBox.Size = new System.Drawing.Size(291, 20);
+            this.BankKeyTextBox.TabIndex = 5;
+            this.BankKeyTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label2
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(88, 71);
+            this.label2.Location = new System.Drawing.Point(77, 79);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 15);
             this.label2.TabIndex = 4;
@@ -89,16 +87,16 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(88, 13);
+            this.label1.Location = new System.Drawing.Point(77, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 15);
+            this.label1.Size = new System.Drawing.Size(228, 15);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Character Name:";
+            this.label1.Text = "Enter The Name of Your Main Character:";
             // 
             // PasswordTextBox
             // 
             this.PasswordTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.PasswordTextBox.Location = new System.Drawing.Point(88, 89);
+            this.PasswordTextBox.Location = new System.Drawing.Point(77, 97);
             this.PasswordTextBox.Name = "PasswordTextBox";
             this.PasswordTextBox.Size = new System.Drawing.Size(291, 20);
             this.PasswordTextBox.TabIndex = 2;
@@ -107,7 +105,7 @@
             // UsernameTextBox
             // 
             this.UsernameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.UsernameTextBox.Location = new System.Drawing.Point(88, 34);
+            this.UsernameTextBox.Location = new System.Drawing.Point(77, 44);
             this.UsernameTextBox.Name = "UsernameTextBox";
             this.UsernameTextBox.Size = new System.Drawing.Size(291, 20);
             this.UsernameTextBox.TabIndex = 1;
@@ -116,24 +114,23 @@
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button1.Location = new System.Drawing.Point(168, 125);
+            this.button1.Location = new System.Drawing.Point(152, 184);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(135, 27);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Sign In";
+            this.button1.Text = "Sign Up";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // LoginPage
+            // SignUpPage
             // 
             this.AcceptButton = this.button1;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(464, 223);
-            this.ControlBox = false;
             this.Controls.Add(this.LoginScreen);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "LoginPage";
+            this.Name = "SignUpPage";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -152,7 +149,7 @@
         private System.Windows.Forms.TextBox PasswordTextBox;
         private System.Windows.Forms.TextBox UsernameTextBox;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox LoggedInCheckBox;
-        private System.Windows.Forms.Button SignUpButton;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox BankKeyTextBox;
     }
 }

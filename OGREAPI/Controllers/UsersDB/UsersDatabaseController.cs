@@ -40,7 +40,7 @@ namespace OGREAPI.Controllers
         [HttpGet("Create/{username}/{password}/{bankkey}")]
         public ActionResult<string> Get(string username, string password, string bankkey)
         {
-            if( bankkey != BankDatabase.Instance.BankKey ) {
+            if(BankDatabase.Instance.BankKey != null && bankkey != BankDatabase.Instance.BankKey ) {
                 return "Incorrect Key";
             }
 

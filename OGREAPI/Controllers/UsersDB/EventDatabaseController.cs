@@ -18,6 +18,17 @@ namespace OGREAPI.Controllers
             return AddSubmissions(username, 1);
         }
 
+        [HttpGet("GrantSubmissionTokens/{username}/{tokenCount}")]
+        public ActionResult<string> GrantSubmissionTokens(string username, int tokenCount)
+        {
+            if (UserDatabase.Instance.UsersDB.ContainsKey(username))
+            {
+                UserDatabase.Instance.UsersDB[username].EventTokens += tokenCount;
+                return "Success";
+            }
+            return "Invalid User";
+        }
+
         [HttpGet("AddSubmission/{username}/{count}")]
         public ActionResult<string> AddSubmissions(string username, int count)
         {
